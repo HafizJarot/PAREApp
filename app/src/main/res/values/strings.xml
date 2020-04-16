@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">PareApp</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_order">Order</string>
+    <string name="title_profile">Profile</string>
+    <string name="info_login">Login</string>
+    <string name="lorem">Lorem ipsum dolor sit amet consectuer. Lorem ipsum dolor sit amet.</string>
+    <string name="hint_email">Masukkan email</string>
+    <string name="common_login">Login</string>
+    <string name="common_login_penyedia">Saya pemilik</string>
+    <string name="login_penyewa">Saya penyewa</string>
+</resources>
