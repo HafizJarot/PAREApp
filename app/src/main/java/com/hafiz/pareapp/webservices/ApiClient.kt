@@ -1,35 +1,38 @@
 package com.hafiz.pareapp.webservices
 
 import com.google.gson.annotations.SerializedName
+import com.hafiz.pareapp.models.Order
+import com.hafiz.pareapp.models.Produk
 import com.hafiz.pareapp.models.User
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
+import java.util.HashMap
 import java.util.concurrent.TimeUnit
 
 class ApiClient {
     companion object {
-        const val ENDPOINT = "https://pare-app.herokuapp.com/"
-        private var retrofit : Retrofit? = null
+        const val ENDPOINT = "https://papanreklame.herokuapp.com/"
+        private var retrofit: Retrofit? = null
         private var opt = OkHttpClient.Builder().apply {
             connectTimeout(30, TimeUnit.SECONDS)
             writeTimeout(30, TimeUnit.SECONDS)
             readTimeout(30, TimeUnit.SECONDS)
         }.build()
 
-        private fun getClient() : Retrofit {
-            return if(retrofit == null){
+        private fun getClient(): Retrofit {
+            return if (retrofit == null) {
                 retrofit = Retrofit.Builder().apply {
                     baseUrl(ENDPOINT)
                     client(opt)
                     addConverterFactory(GsonConverterFactory.create())
                 }.build()
                 retrofit!!
-            }else{
+            } else {
                 retrofit!!
             }
         }
@@ -38,22 +41,90 @@ class ApiClient {
     }
 }
 
-interface ApiService{
+interface ApiService {
     @FormUrlEncoded
-    @POST("api/penyewa/login")
-    fun loginPenyewa(@Field("email") email : String, @Field("password") password : String)
-            : Call<WrappedResponse<User>>
+    @POST("api/user/login/penyewa")
+    fun loginPenyewa(@Field("email") email: String, @Field("password") password: String): Call<WrappedResponse<User>>
+
+    @FormUrlEncoded
+    @POST("api/user/login")
+    fun loginPemilik(@Field("email") email: String, @Field("password") password: String): Call<WrappedResponse<User>>
+
+    @FormUrlEncoded
+    @POST("api/user/login")
+    fun login(
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("role") role: Int
+    ): Call<WrappedResponse<User>>
+
+    @GET("api/produk/all")
+    fun getAllProduk(@Header("Authorization") token: String): Call<WrappedListResponse<Produk>>
+
+    @FormUrlEncoded
+    @POST("api/produk/search")
+    fun searchProduk(
+        @Header("Authorization") token: String,
+        @Field("tanggal_mulai") tanggalMulaiSewa: String,
+        @Field("tanggal_selesai") lamaSewa: Int
+    ): Call<WrappedListResponse<Produk>>
+
+    @GET("api/user/profile")
+    fun profile(@Header("Authorization") token: String): Call<WrappedResponse<User>>
+
+    @GET("api/produk")
+    fun getProdukPemilik(@Header("Authorization") token: String): Call<WrappedListResponse<Produk>>
+
+    @Multipart
+    @POST("api/produk/store")
+    fun tambahproduk(
+        @Header("Authorization") token: String,
+        @PartMap partMap: HashMap<String, RequestBody>,
+        @Part image: MultipartBody.Part
+    ): Call<WrappedResponse<Produk>>
+
+    @Multipart
+    @POST("api/produk/{id}/update")
+    fun updateproduk(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int? = null,
+        @PartMap partMap: HashMap<String, RequestBody>,
+        @Part image: MultipartBody.Part
+    ): Call<WrappedResponse<Produk>>
+
+    @FormUrlEncoded
+    @POST("api/order/store")
+    fun orderStore(
+        @Header("Authorization") token: String,
+        @Field("id_pemilik") id_pemilik: Int,
+        @Field("id_produk") id_produk: Int,
+        @Field("harga") harga: Int,
+        @Field("tanggal_mulai_sewa") tanggal_mulai_sewa: String,
+        @Field("selesai_sewa") selesai_sewa: String,
+        @Field("sisi") sisi: String
+    ): Call<WrappedResponse<Order>>
+
+    @GET("api/order/penyewa")
+    fun getPenyewaMyOrders(
+        @Header("Authorization") token: String
+    ): Call<WrappedListResponse<Order>>
+
+    @GET("api/order/pemilik")
+    fun getPemilikMyOrders(
+        @Header("Authorization") token: String
+    ): Call<WrappedListResponse<Order>>
+
 }
 
 
 data class WrappedResponse<T>(
-    @SerializedName("message") var message : String,
-    @SerializedName("status") var status : Boolean,
-    @SerializedName("data") var data : T
+    @SerializedName("message") var message: String,
+    @SerializedName("status") var status: Boolean,
+    @SerializedName("data") var data: T
 )
 
 data class WrappedListResponse<T>(
-    @SerializedName("message") var message : String,
-    @SerializedName("status") var status : Boolean,
-    @SerializedName("data") var data : List<T>
+    @SerializedName("message") var message: String,
+    @SerializedName("status") var status: Boolean,
+    @SerializedName("data") var data: List<T>
 )

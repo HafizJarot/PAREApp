@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorWhite"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.github.florent37.shapeofview.shapes.RoundRectView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:shape_roundRect_bottomLeftRadius="10dp"
+        app:shape_roundRect_bottomRightRadius="10dp">
+
+        <FrameLayout
+            android:background="@drawable/grad_bg"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
+
+    </com.github.florent37.shapeofview.shapes.RoundRectView>
+
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/card"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:src="@drawable/phone"/>
+
+   <androidx.cardview.widget.CardView
+       android:id="@+id/card"
+       android:elevation="2dp"
+       android:layout_centerInParent="true"
+       app:cardCornerRadius="8dp"
+       android:layout_margin="10dp"
+       app:cardUseCompatPadding="true"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <LinearLayout
+           android:layout_margin="20dp"
+           android:orientation="vertical"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+           <TextView
+               android:layout_marginBottom="20dp"
+               android:textSize="24sp"
+               android:text="Cari Produk"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
+
+           <TextView
+               android:drawableStart="@drawable/ic_event_available_black"
+               android:layout_marginBottom="30dp"
+               android:textSize="18sp"
+               android:text="Klik Untuk Tanggal Mulai Sewa"
+               android:id="@+id/txt_tanggal_mulai"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
+
+           <com.google.android.material.textfield.TextInputLayout
+               app:errorEnabled="true"
+               android:id="@+id/til_lama_sewa"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <com.google.android.material.textfield.TextInputEditText
+                   android:inputType="number"
+                   android:id="@+id/et_lama_sewa"
+                   android:hint="Masukkan Berapa Lama Sewa"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"/>
+
+           </com.google.android.material.textfield.TextInputLayout>
+
+           <Button
+               android:text="cari"
+               android:id="@+id/btn_search"
+               android:backgroundTint="#4682B4"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
+
+       </LinearLayout>
+
+   </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

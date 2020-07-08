@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:elevation="3dp"
+    app:cardCornerRadius="10dp"
+    android:clickable="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/grad_bg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusable="true">
+
+
+    <RelativeLayout
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="Nama Pemilik"
+            android:id="@+id/tv_nama_pemilik"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_below="@id/tv_nama_pemilik"
+            android:textSize="18sp"
+            android:text="Nama Pemilik"
+            android:id="@+id/tv_nama_penyewa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_below="@id/tv_nama_penyewa"
+            android:textSize="18sp"
+            android:text="Nama Produk"
+            android:id="@+id/tv_nama_produk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

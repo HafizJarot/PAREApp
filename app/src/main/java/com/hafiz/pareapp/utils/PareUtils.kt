@@ -11,6 +11,19 @@ object PareUtils {
         return s?.getString("TOKEN", null)
     }
 
+    fun getRole(c : Context) : Boolean? {
+        val s = c.getSharedPreferences("USER", MODE_PRIVATE)
+        return s?.getBoolean("ROLE", false)
+    }
+
+    fun setRole(context: Context, role: Boolean){
+        val pref = context.getSharedPreferences("USER", MODE_PRIVATE)
+        pref.edit().apply {
+            putBoolean("ROLE", role)
+            apply()
+        }
+    }
+
     fun setToken(context: Context, token : String){
         val pref = context.getSharedPreferences("USER", MODE_PRIVATE)
         pref.edit().apply {

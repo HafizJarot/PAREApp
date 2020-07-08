@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/grad_bg"
+    android:layout_height="match_parent"
+    tools:context=".activiities.penyewa.produk_activity.PenyewaProdukActivity">
+
+
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/pb_penyewa_produk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_marginStart="8dp"
+        android:id="@+id/linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_marginEnd="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bolditalic"
+            android:text="PARE."
+            android:textColor="#FF9800"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/roboto_bolditalic"
+            android:text="Mobile"
+            android:textColor="#fff"
+            android:textSize="24sp" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/label"
+        android:layout_below="@id/linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Semua hasil papan reklame yang masih kosong"
+        android:textSize="14sp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/label"
+        android:id="@+id/rv_penyewa_produk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+</RelativeLayout>
