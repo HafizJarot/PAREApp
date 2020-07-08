@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bolditalic"
             android:text="PARE."
-            android:textColor="#FF9800"
+            android:textColor="#FFD700"
             android:textSize="24sp"/>
 
         <TextView
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
-        android:text="Semua hasil papan reklame yang masih kosong"
+        android:text="Mudah, Cepat, dan Terpercaya"
         android:textSize="14sp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@+id/label"

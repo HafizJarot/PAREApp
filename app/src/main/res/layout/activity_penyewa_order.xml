@@ -4,8 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/grad_bg"
     tools:context=".activiities.penyewa.order_activity.PenyewaOrderActivity">
+
+    <FrameLayout
+        android:background="@drawable/grad_bg"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_margin="15dp"
@@ -42,7 +46,7 @@
                 android:id="@+id/txt_tanggal_mulai"
                 android:layout_gravity="center_vertical"
                 android:textSize="18sp"
-                android:text="harga"
+                android:text="Harga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -57,7 +61,7 @@
                 android:id="@+id/txt_harga"
                 android:layout_gravity="center_vertical"
                 android:textSize="18sp"
-                android:text="harga"
+                android:text="Harga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -66,7 +70,7 @@
                 android:id="@+id/txt_sisi"
                 android:layout_gravity="center_vertical"
                 android:textSize="18sp"
-                android:text="sisi"
+                android:text="Sisi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -75,7 +79,7 @@
                 android:id="@+id/txt_lama_sewa"
                 android:layout_gravity="center_vertical"
                 android:textSize="18sp"
-                android:text="lama sewa"
+                android:text="Lama sewa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -99,7 +103,7 @@
                 android:textColor="@android:color/black"
                 android:layout_marginTop="10dp"
                 android:id="@+id/btn_order"
-                android:backgroundTint="#FF9800"
+                android:backgroundTint="#4682B4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

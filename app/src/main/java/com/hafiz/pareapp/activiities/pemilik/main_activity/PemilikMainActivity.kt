@@ -11,7 +11,7 @@ import com.hafiz.pareapp.R
 import com.hafiz.pareapp.fragments.pemilik.home_fragment.PemilikHomeFragment
 import com.hafiz.pareapp.fragments.pemilik.NotificationsFragment
 import com.hafiz.pareapp.fragments.pemilik.order_fragment.PemilikMyOrderFragment
-import com.hafiz.pareapp.fragments.pemilik.ProfileFragment
+import com.hafiz.pareapp.fragments.pemilik.PemilikProfileFragment
 import com.hafiz.pareapp.utils.PareUtils
 import kotlinx.android.synthetic.main.pemilik_activity_main.*
 
@@ -58,7 +58,7 @@ class PemilikMainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_profile -> {
                     if (navStatus != 3) {
-                        fragment = ProfileFragment()
+                        fragment = PemilikProfileFragment()
                         navStatus = 3
                     }
                 }

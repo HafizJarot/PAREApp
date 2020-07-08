@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/grad_bg"
     android:layout_height="match_parent">
 
     <com.github.florent37.shapeofview.shapes.RoundRectView
@@ -38,7 +37,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bolditalic"
             android:text="PARE."
-            android:textColor="#FF9800"
+            android:textColor="#FFD700"
             android:textSize="24sp"/>
 
         <TextView
@@ -61,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_regular"
-        android:text="Papan reklame yang sudah anda sewa"
+        android:text="Mudah, Cepat, dan Terpercaya"
         android:textSize="14sp"/>
 
 

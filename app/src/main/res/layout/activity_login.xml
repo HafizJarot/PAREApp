@@ -1,99 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/grad_bg"
     tools:context=".activiities.login_activity.LoginActivity">
 
-    <LinearLayout
-        android:layout_margin="16dp"
-        android:orientation="vertical"
+    <FrameLayout
+        android:background="@drawable/grad_bg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="300dp"/>
 
-        <TextView
-            android:textSize="30sp"
-            android:textColor="#FF9800"
-            android:textStyle="bold"
-            android:layout_marginTop="26dp"
-            android:text="LOGIN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:text=""
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/loading"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="8dp"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/in_email"
-            app:errorEnabled="true"
-            android:hint="@string/hint_email"
-            app:boxBackgroundColor="@android:color/transparent"
+        <com.google.android.material.card.MaterialCardView
+            android:elevation="1dp"
+            app:cardCornerRadius="8dp"
+            android:layout_margin="8dp"
+            android:backgroundTint="@android:color/white"
+            android:layout_gravity="center_vertical"
+            app:cardUseCompatPadding="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:id="@+id/et_email"
-                android:inputType="textEmailAddress"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textSize="30sp"
+                    android:textColor="@color/colorButton"
+                    android:textStyle="bold"
+                    android:layout_marginTop="26dp"
+                    android:text="LOGIN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <ProgressBar
+                    android:id="@+id/loading"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/in_email"
+                    app:errorEnabled="true"
+                    android:hint="@string/hint_email"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/et_email"
+                        android:inputType="textEmailAddress"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/in_password"
-            app:errorEnabled="true"
-            android:hint="Masukkan password"
-            app:boxBackgroundColor="@android:color/transparent"
-            android:layout_width="match_parent"
-            app:passwordToggleEnabled="true"
-            android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/in_password"
+                    app:errorEnabled="true"
+                    android:hint="Masukkan password"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    app:passwordToggleEnabled="true"
+                    android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:id="@+id/et_password"
-                android:inputType="textPassword"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/et_password"
+                        android:inputType="textPassword"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:layout_marginBottom="10dp"
-            android:id="@+id/spinner_role"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                <Spinner
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/spinner_role"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
-            android:id="@+id/btn_login"
-            android:text="Login"
-            android:textAllCaps="false"
-            android:backgroundTint="#FF9800"
-            android:layout_height="56dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:id="@+id/btn_login"
+                    android:text="Login"
+                    android:textAllCaps="false"
+                    android:backgroundTint="@color/colorButton"
+                    android:layout_height="56dp"/>
+            </LinearLayout>
 
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:id="@+id/btn_login_pemilik"-->
-<!--            android:text="Login Pemilik"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:layout_height="56dp"/>-->
+        </com.google.android.material.card.MaterialCardView>
 
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:id="@+id/btn_login_penyewa"-->
-<!--            android:text="Login Penyewa"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:layout_height="56dp"/>-->
-    </LinearLayout>
+    </ScrollView>
 
-</ScrollView>
+
+
+</RelativeLayout>

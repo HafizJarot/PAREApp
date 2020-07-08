@@ -74,7 +74,8 @@ class PemilikProdukActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun fill(){
         if (isInsert()){
-            btn_store.text = "tambah produk"
+            label_produk.text = "Tambah Papan Reklame"
+            btn_store.text = "tambah"
             btn_store.setOnClickListener {
                 val token = "Bearer ${PareUtils.getToken(this@PemilikProdukActivity)}"
                 val panjang = et_panjang.text.toString().trim()
@@ -95,7 +96,8 @@ class PemilikProdukActivity : AppCompatActivity() {
             }
         }else{
             isUpdate()
-            btn_store.text = "update produk"
+            label_produk.text = "Update Papan Reklame"
+            btn_store.text = "update"
             btn_store.setOnClickListener {
                 val token = "Bearer ${PareUtils.getToken(this@PemilikProdukActivity)}"
                 val panjang = et_panjang.text.toString().trim()
@@ -126,6 +128,7 @@ class PemilikProdukActivity : AppCompatActivity() {
             et_keterangan.setText(it.keterangan!!)
             et_hargasewa.setText(it.harga_sewa.toString())
             et_alamat.setText(it.alamat)
+            et_sisi.setText(it.sisi.toString())
             iv_product.load(it.foto)
         }
     }

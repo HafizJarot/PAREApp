@@ -2,9 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/grad_bg"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:background="@drawable/grad_bg"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_home"
@@ -21,10 +24,10 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_create"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
-        android:backgroundTint="#FF9800"
+        android:backgroundTint="@color/colorButton"
         android:src="@drawable/ic_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

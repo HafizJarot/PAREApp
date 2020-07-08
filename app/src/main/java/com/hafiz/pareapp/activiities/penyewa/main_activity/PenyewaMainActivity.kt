@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import com.hafiz.pareapp.activiities.login_activity.LoginActivity
 import com.hafiz.pareapp.R
 import com.hafiz.pareapp.fragments.pemilik.NotificationsFragment
-import com.hafiz.pareapp.fragments.pemilik.ProfileFragment
+import com.hafiz.pareapp.fragments.pemilik.PemilikProfileFragment
 import com.hafiz.pareapp.fragments.penyewa.home_fragment.PenyewaHomeFragment
 import com.hafiz.pareapp.fragments.penyewa.order_fragment.PenyewaMyOrderFragment
+import com.hafiz.pareapp.fragments.penyewa.profile_fragment.PenyewaProfileFragment
 import com.hafiz.pareapp.utils.PareUtils
 import kotlinx.android.synthetic.main.penyewa_activity_main.*
 
@@ -60,7 +61,7 @@ class PenyewaMainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_profile -> {
                     if (navStatus != 3) {
-                        fragment = ProfileFragment()
+                        fragment = PenyewaProfileFragment()
                         navStatus = 3
                     }
                 }

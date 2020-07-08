@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/colorWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -46,7 +45,7 @@
            <TextView
                android:layout_marginBottom="20dp"
                android:textSize="24sp"
-               android:text="Cari Produk"
+               android:text="Cari Papan Reklame"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>
 
@@ -60,6 +59,7 @@
                android:layout_height="wrap_content"/>
 
            <com.google.android.material.textfield.TextInputLayout
+               app:boxBackgroundColor="@android:color/transparent"
                app:errorEnabled="true"
                android:id="@+id/til_lama_sewa"
                android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                <com.google.android.material.textfield.TextInputEditText
                    android:inputType="number"
                    android:id="@+id/et_lama_sewa"
-                   android:hint="Masukkan Berapa Lama Sewa"
+                   android:hint="Masukkan Berapa Bulan Lama Sewa"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"/>
 
@@ -77,7 +77,7 @@
            <Button
                android:text="cari"
                android:id="@+id/btn_search"
-               android:backgroundTint="#4682B4"
+               android:backgroundTint="@color/colorButton"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>
 

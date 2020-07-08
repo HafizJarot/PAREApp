@@ -49,10 +49,10 @@
                android:layout_height="wrap_content"/>
 
            <Button
-               android:text="order"
+               android:text="Lanjutkan"
                android:textColor="@android:color/black"
                android:id="@+id/btn_order"
-               android:backgroundTint="#FF9800"
+               android:backgroundTint="#4682B4"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>
 
