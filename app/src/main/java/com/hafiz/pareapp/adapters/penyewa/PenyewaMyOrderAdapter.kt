@@ -28,7 +28,6 @@ class PenyewaMyOrderAdapter (private var orders : MutableList<Order>, private va
                 txt_harga.text = order.produk.harga_sewa.toString()
                 txt_alamat.text = order.produk.alamat
                 img_produk.load(order.produk.foto)
-                println(order.produk.foto)
             }
         }
     }

@@ -72,6 +72,7 @@ class OrderRepository (private val api : ApiService){
                     val body = response.body()
                     if (body?.status!!){
                         val data = body.data
+                        println(data)
                         result(data, null)
                     }else{
                         result(null, Error())

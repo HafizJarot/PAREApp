@@ -1,9 +1,14 @@
 package com.hafiz.pareapp.repositories
 
+import com.google.gson.GsonBuilder
+import com.hafiz.pareapp.models.RegisterPemilik
+import com.hafiz.pareapp.models.RegisterPenyewa
 import com.hafiz.pareapp.models.User
 import com.hafiz.pareapp.utils.SingleResponse
 import com.hafiz.pareapp.webservices.ApiService
 import com.hafiz.pareapp.webservices.WrappedResponse
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,6 +52,54 @@ class UserRepository (private val api : ApiService) : UserContract{
                     }
                 }else{
                     result(null, Error(response.message()))
+                }
+            }
+
+        })
+    }
+
+    fun registerPemilik(user : RegisterPemilik, result: (RegisterPemilik?, Error?) -> Unit){
+        val g = GsonBuilder().create()
+        val json = g.toJson(user)
+        val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
+        api.regiserPemilik(body).enqueue(object : Callback<WrappedResponse<RegisterPemilik>>{
+            override fun onFailure(call: Call<WrappedResponse<RegisterPemilik>>, t: Throwable) {
+                result(null, Error(t.message))
+            }
+
+            override fun onResponse(call: Call<WrappedResponse<RegisterPemilik>>, response: Response<WrappedResponse<RegisterPemilik>>) {
+                if (response.isSuccessful){
+                    val b = response.body()
+                    if (b?.status!!){
+                        val data = b.data
+                        result(data, null)
+                    }else{
+                        result(null, Error("maaf, gagal register"))
+                    }
+                }else{
+                    result(null, Error("gagal register"))
+                }
+            }
+        })
+    }
+
+    fun registerPenyewa(nama : String, email: String, passsword: String, alamat : String, result: (RegisterPenyewa?, Error?) -> Unit){
+        api.registerPenyewa(nama, email, passsword, alamat).enqueue(object : Callback<WrappedResponse<RegisterPenyewa>>{
+            override fun onFailure(call: Call<WrappedResponse<RegisterPenyewa>>, t: Throwable) {
+                result(null, Error(t.message))
+            }
+
+            override fun onResponse(call: Call<WrappedResponse<RegisterPenyewa>>, response: Response<WrappedResponse<RegisterPenyewa>>) {
+                if (response.isSuccessful){
+                    val b = response.body()
+                    if (b?.status!!){
+                        val data = b.data
+                        result(data, null)
+                    }else{
+                        result(null, Error("maaf, gagal register"))
+                    }
+                }else{
+                    result(null, Error("gagal register"))
                 }
             }
 

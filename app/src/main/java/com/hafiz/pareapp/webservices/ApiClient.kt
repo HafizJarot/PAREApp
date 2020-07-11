@@ -1,9 +1,7 @@
 package com.hafiz.pareapp.webservices
 
 import com.google.gson.annotations.SerializedName
-import com.hafiz.pareapp.models.Order
-import com.hafiz.pareapp.models.Produk
-import com.hafiz.pareapp.models.User
+import com.hafiz.pareapp.models.*
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -42,13 +40,21 @@ class ApiClient {
 }
 
 interface ApiService {
-    @FormUrlEncoded
-    @POST("api/user/login/penyewa")
-    fun loginPenyewa(@Field("email") email: String, @Field("password") password: String): Call<WrappedResponse<User>>
+
+    @Headers("Content-Type: application/json")
+    @POST("api/user/register/pemilik")
+    fun regiserPemilik(
+        @Body body: RequestBody
+    ) : Call<WrappedResponse<RegisterPemilik>>
 
     @FormUrlEncoded
-    @POST("api/user/login")
-    fun loginPemilik(@Field("email") email: String, @Field("password") password: String): Call<WrappedResponse<User>>
+    @POST("api/user/register/penyewa")
+    fun registerPenyewa(
+        @Field("nama") nama : String,
+        @Field("email") email : String,
+        @Field("password") password : String,
+        @Field("alamat") alamat : String
+    ) : Call<WrappedResponse<RegisterPenyewa>>
 
     @FormUrlEncoded
     @POST("api/user/login")

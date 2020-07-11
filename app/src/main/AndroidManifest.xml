@@ -21,20 +21,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activiities.penyewa.produk_activity.PenyewaProdukActivity" />
-        <activity android:name=".activiities.penyewa.order_activity.PenyewaOrderActivity" />
-        <activity android:name=".activiities.pemilik.produk_activity.PemilikProdukActivity" />
+        <activity android:name=".activiities.penyewa.produk.PenyewaProdukActivity" />
+        <activity android:name=".activiities.penyewa.order.PenyewaOrderActivity" />
+        <activity android:name=".activiities.pemilik.produk.PemilikProdukActivity" />
+        <activity android:name=".activiities.penyewa.register.PenyewaRegisterActivity"/>
+        <activity android:name=".activiities.pemilik.register.PemilikRegisterActivity"/>
         <activity
-            android:name=".activiities.penyewa.detail_activity.PenyewaDetailProdukActivity"
+            android:name=".activiities.penyewa.detail.PenyewaDetailProdukActivity"
             android:label="@string/title_activity_penyewa_detail_produk"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activiities.login_activity.LoginActivity">
+        <activity android:name=".activiities.login.LoginActivity">
 
         </activity>
         <activity
-            android:name=".activiities.penyewa.main_activity.PenyewaMainActivity"
+            android:name=".activiities.penyewa.main.PenyewaMainActivity"
             android:label="@string/app_name" />
-        <activity android:name=".activiities.pemilik.main_activity.PemilikMainActivity" />
+        <activity android:name=".activiities.pemilik.main.PemilikMainActivity" />
     </application>
 
 </manifest>

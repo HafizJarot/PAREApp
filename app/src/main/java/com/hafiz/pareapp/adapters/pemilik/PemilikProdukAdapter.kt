@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.hafiz.pareapp.R
-import com.hafiz.pareapp.activiities.pemilik.produk_activity.PemilikProdukActivity
+import com.hafiz.pareapp.activiities.pemilik.produk.PemilikProdukActivity
 import com.hafiz.pareapp.models.Produk
 import kotlinx.android.synthetic.main.item_produk.view.*
 

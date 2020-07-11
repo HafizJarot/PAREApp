@@ -37,7 +37,7 @@
                     android:textColor="@color/colorButton"
                     android:textStyle="bold"
                     android:layout_marginTop="26dp"
-                    android:text="LOGIN"
+                    android:text="DAFTAR"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -49,48 +49,89 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/in_email"
                     app:errorEnabled="true"
-                    android:hint="@string/hint_email"
+                    android:id="@+id/til_nama_lengkap"
                     app:boxBackgroundColor="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:hint="Nama lengkap"
+                        android:layout_width="match_parent"
+                        android:id="@+id/et_nama_lengkap"
+                        android:inputType="textEmailAddress"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_email"
+                    app:errorEnabled="true"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:hint="Email"
                         android:layout_width="match_parent"
                         android:id="@+id/et_email"
                         android:inputType="textEmailAddress"
                         android:layout_height="wrap_content"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/in_password"
                     app:errorEnabled="true"
-                    android:hint="Masukkan password"
+                    android:id="@+id/til_password"
                     app:boxBackgroundColor="@android:color/transparent"
                     android:layout_width="match_parent"
                     app:passwordToggleEnabled="true"
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
+                        android:hint="Password"
                         android:id="@+id/et_password"
-                        android:inputType="textPassword"
-                        android:layout_height="wrap_content"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Spinner
-                    android:layout_marginBottom="10dp"
-                    android:id="@+id/spinner_role"
+                <com.google.android.material.textfield.TextInputLayout
+                    app:errorEnabled="true"
+                    android:id="@+id/til_confirm_password"
+                    app:boxBackgroundColor="@android:color/transparent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    app:passwordToggleEnabled="true"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:hint="Konfirmasi password"
+                        android:layout_width="match_parent"
+                        android:inputType="textPassword"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_confirm_password"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    app:errorEnabled="true"
+                    android:id="@+id/til_alamat"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:hint="Alamat"
+                        android:layout_width="match_parent"
+                        android:inputType="textEmailAddress"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_alamat"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="match_parent"
-                    android:id="@+id/btn_login"
-                    android:text="Login"
+                    android:id="@+id/btn_buat_akun"
+                    android:text="BUAT AKUN"
                     android:textAllCaps="false"
                     android:backgroundTint="@color/colorButton"
                     android:layout_height="56dp"/>
@@ -99,30 +140,5 @@
         </com.google.android.material.card.MaterialCardView>
 
     </ScrollView>
-
-
-    <LinearLayout
-        android:layout_margin="8dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_marginEnd="3dp"
-            android:text="register penyewa"
-            android:layout_weight="1"
-            android:id="@+id/btn_register_penyewa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:text="register pemilik"
-            android:layout_weight="1"
-            android:id="@+id/btn_register_pemilik"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
 
 </RelativeLayout>

@@ -1,13 +1,16 @@
 package com.hafiz.pareapp
 
 import android.app.Application
-import com.hafiz.pareapp.activiities.login_activity.LoginViewModel
-import com.hafiz.pareapp.activiities.pemilik.produk_activity.PemilikProdukViewModel
-import com.hafiz.pareapp.activiities.penyewa.order_activity.PenyewaOrderViewModel
-import com.hafiz.pareapp.activiities.penyewa.produk_activity.PenyewaProdukViewModel
-import com.hafiz.pareapp.fragments.pemilik.home_fragment.PemilikHomeViewModel
-import com.hafiz.pareapp.fragments.penyewa.home_fragment.PenyewaHomeViewModel
-import com.hafiz.pareapp.fragments.penyewa.order_fragment.PenyewaMyOrderViewModel
+import com.hafiz.pareapp.activiities.login.LoginViewModel
+import com.hafiz.pareapp.activiities.pemilik.produk.PemilikProdukViewModel
+import com.hafiz.pareapp.activiities.pemilik.register.PemilikRegisterViewModel
+import com.hafiz.pareapp.activiities.penyewa.order.PenyewaOrderViewModel
+import com.hafiz.pareapp.activiities.penyewa.produk.PenyewaProdukViewModel
+import com.hafiz.pareapp.activiities.penyewa.register.PenyewaRegisterViewModel
+import com.hafiz.pareapp.fragments.pemilik.home.PemilikHomeViewModel
+import com.hafiz.pareapp.fragments.pemilik.order.PemilikMyOrderViewModel
+import com.hafiz.pareapp.fragments.penyewa.home.PenyewaHomeViewModel
+import com.hafiz.pareapp.fragments.penyewa.order.PenyewaMyOrderViewModel
 import com.hafiz.pareapp.repositories.OrderRepository
 import com.hafiz.pareapp.repositories.ProdukRepository
 import com.hafiz.pareapp.repositories.UserRepository
@@ -39,8 +42,15 @@ val repositoryModules = module {
 }
 
 val viewModelModules = module {
+
+    viewModel { PenyewaRegisterViewModel(get()) }
+    viewModel { PemilikRegisterViewModel(get()) }
+
     viewModel { PemilikHomeViewModel(get()) }
     viewModel { PemilikProdukViewModel(get()) }
+    viewModel { PemilikMyOrderViewModel(get()) }
+
+
     viewModel { LoginViewModel(get()) }
     viewModel { PenyewaOrderViewModel(get(),get()) }
     viewModel { PenyewaProdukViewModel(get()) }

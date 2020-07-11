@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activiities.pemilik.produk_activity.PemilikProdukActivity">
+    tools:context=".activiities.pemilik.produk.PemilikProdukActivity">
 
     <FrameLayout
         android:background="@drawable/grad_bg"

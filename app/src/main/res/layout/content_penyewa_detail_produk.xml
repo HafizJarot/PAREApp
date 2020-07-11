@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activiities.penyewa.detail_activity.PenyewaDetailProdukActivity"
+    tools:context=".activiities.penyewa.detail.PenyewaDetailProdukActivity"
     tools:showIn="@layout/activity_penyewa_detail_produk">
 
    <androidx.cardview.widget.CardView
