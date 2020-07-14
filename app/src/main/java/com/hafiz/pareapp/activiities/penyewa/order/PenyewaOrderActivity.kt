@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.hafiz.pareapp.R
 import com.hafiz.pareapp.fragments.penyewa.order.PenyewaMyOrderFragment
+import com.hafiz.pareapp.models.CreateOrder
 import com.hafiz.pareapp.models.Produk
 import com.hafiz.pareapp.models.User
 import com.hafiz.pareapp.utils.PareUtils
@@ -19,6 +20,8 @@ class PenyewaOrderActivity : AppCompatActivity() {
     private val penyewaOrderViewModel : PenyewaOrderViewModel by viewModel()
     private var harga : Int? = null
     private var sisi : Int? = null
+    private lateinit var idPenyewa : String
+    private val paymentMidtrans = PaymentMidtrans()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,21 +56,43 @@ class PenyewaOrderActivity : AppCompatActivity() {
     }
 
     private fun order(){
+//        btn_order.setOnClickListener {
+//            val token = "Bearer ${PareUtils.getToken(this@PenyewaOrderActivity)}"
+//            val id_penyewa = getPassedProduct()?.user!!.id
+//            val id_produk = getPassedProduct()?.id
+//            val harga = getPassedProduct()?.harga_sewa
+//            val tanggal_mulai_sewa = getPassedTanggalMulai()
+//            val selesai_sewa = getPassedLamaSewa()
+//            val sisi = getPassedProduct()?.sisi
+//            penyewaOrderViewModel.orderStore(token, id_penyewa.toString(), id_produk.toString(),
+//                harga.toString(), tanggal_mulai_sewa!!, selesai_sewa!!, sisi.toString())
+//        }
+        val token = "Bearer ${PareUtils.getToken(this@PenyewaOrderActivity)}"
+        val id_pemilik = getPassedProduct()?.user!!.id
+        val id_produk = getPassedProduct()?.id
+        val harga = getPassedProduct()?.harga_sewa
+        val tanggal_mulai_sewa = getPassedTanggalMulai()
+        val selesai_sewa = getPassedLamaSewa()
+        val sisi = getPassedProduct()?.sisi
+        val createOrder = CreateOrder(idPemilik = id_pemilik.toString(), idProduk = id_produk.toString(), harga = harga.toString(),
+            tanggalMulaiSewa = tanggal_mulai_sewa!!, selesaiSewa = selesai_sewa!!, sisi = sisi.toString())
+
+        paymentMidtrans.initPayment(this@PenyewaOrderActivity, penyewaOrderViewModel, token, createOrder)
         btn_order.setOnClickListener {
-            val token = "Bearer ${PareUtils.getToken(this@PenyewaOrderActivity)}"
-            val id_penyewa = getPassedProduct()?.user!!.id
-            val id_produk = getPassedProduct()?.id
-            val harga = getPassedProduct()?.harga_sewa
-            val tanggal_mulai_sewa = getPassedTanggalMulai()
-            val selesai_sewa = getPassedLamaSewa()
-            val sisi = getPassedProduct()?.sisi
-            penyewaOrderViewModel.orderStore(token, id_penyewa.toString(), id_produk.toString(),
-                harga.toString(), tanggal_mulai_sewa!!, selesai_sewa!!, sisi.toString())
+            val _harga = getPassedProduct()?.harga_sewa
+            val _selesai_sewa = getPassedLamaSewa()
+            val _sisi = getPassedProduct()?.sisi
+            paymentMidtrans.showPayment(this@PenyewaOrderActivity, idPenyewa
+                ,_harga!!.times(_sisi!!), _selesai_sewa!!.toInt(), getPassedProduct()?.alamat!!)
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun handleUser(it : User){ txt_username.text = "Nama Pemesan : ${it.name}" }
+    private fun handleUser(it : User){
+        idPenyewa = it.id.toString()
+        btn_order.isEnabled = true
+        txt_username.text = "Nama Pemesan : ${it.name}"
+    }
     private fun getPassedProduct() : Produk? = intent.getParcelableExtra("PRODUK")
     private fun getPassedTanggalMulai() = intent.getStringExtra("TANGGAL_MULAI")
     private fun getPassedLamaSewa() = intent.getStringExtra("LAMA_SEWA")

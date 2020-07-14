@@ -9,6 +9,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+    flavorDimensions "mode"
     defaultConfig {
         applicationId "com.hafiz.pareapp"
         minSdkVersion 22
@@ -16,6 +17,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    productFlavors {
+        sandBox {
+            applicationId "com.travelme.customer"
+            buildConfigField "String", "CLIENT_KEY", '"SB-Mid-client-DR1pSQluEKCjZNf0"'
+        }
     }
     buildTypes {
         release {
@@ -71,5 +78,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     implementation 'com.github.florent37:shapeofview:1.4.7'
-
+    implementation 'com.midtrans:uikit:1.21.2-SANDBOX'
 }

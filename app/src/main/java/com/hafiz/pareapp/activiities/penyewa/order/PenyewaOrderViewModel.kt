@@ -2,6 +2,7 @@ package com.hafiz.pareapp.activiities.penyewa.order
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.hafiz.pareapp.models.CreateOrder
 import com.hafiz.pareapp.models.User
 import com.hafiz.pareapp.repositories.OrderRepository
 import com.hafiz.pareapp.repositories.UserRepository
@@ -25,10 +26,9 @@ class PenyewaOrderViewModel (private val userRepository: UserRepository, private
         }
     }
 
-    fun orderStore(token : String, id_penyewa : String, id_produk : String, harga : String,
-                   tanggal_mulai_sewa : String, selesai_sewa : String, sisi : String){
+    fun orderStore(token : String, createOrder: CreateOrder){
         setLoading()
-        orderRepository.orderStore(token, id_penyewa, id_produk, harga, tanggal_mulai_sewa, selesai_sewa, sisi){resultBool, error->
+        orderRepository.orderStore(token, createOrder){resultBool, error->
             hideLoading()
             error?.let { it.message?.let { message-> toast(message) } }
             if (resultBool){ success() }

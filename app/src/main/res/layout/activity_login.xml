@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,122 +7,128 @@
     android:layout_height="match_parent"
     tools:context=".activiities.login.LoginActivity">
 
-    <FrameLayout
-        android:background="@drawable/grad_bg"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.card.MaterialCardView
-            android:elevation="1dp"
-            app:cardCornerRadius="8dp"
-            android:layout_margin="8dp"
-            android:backgroundTint="@android:color/white"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:background="@drawable/grad_bg"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
+        <LinearLayout
+            android:layout_marginTop="100dp"
             android:layout_gravity="center_vertical"
-            app:cardUseCompatPadding="true"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_margin="10dp"
-                android:orientation="vertical"
+            <com.google.android.material.card.MaterialCardView
+                android:elevation="1dp"
+                app:cardCornerRadius="8dp"
+                android:layout_margin="8dp"
+                android:backgroundTint="@android:color/white"
+                android:layout_gravity="center_vertical"
+                app:cardUseCompatPadding="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:textSize="30sp"
-                    android:textColor="@color/colorButton"
-                    android:textStyle="bold"
-                    android:layout_marginTop="26dp"
-                    android:text="LOGIN"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <ProgressBar
-                    android:id="@+id/loading"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginTop="8dp"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/in_email"
-                    app:errorEnabled="true"
-                    android:hint="@string/hint_email"
-                    app:boxBackgroundColor="@android:color/transparent"
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <TextView
+                        android:textSize="30sp"
+                        android:textColor="@color/colorButton"
+                        android:textStyle="bold"
+                        android:layout_marginTop="26dp"
+                        android:text="LOGIN"
                         android:layout_width="match_parent"
-                        android:id="@+id/et_email"
-                        android:inputType="textEmailAddress"
                         android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
 
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/in_password"
-                    app:errorEnabled="true"
-                    android:hint="Masukkan password"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    android:layout_width="match_parent"
-                    app:passwordToggleEnabled="true"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputEditText
+                    <ProgressBar
+                        android:id="@+id/loading"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="8dp"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                         android:layout_width="match_parent"
-                        android:id="@+id/et_password"
-                        android:inputType="textPassword"
                         android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
 
-                <Spinner
-                    android:layout_marginBottom="10dp"
-                    android:id="@+id/spinner_role"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/in_email"
+                        app:errorEnabled="true"
+                        android:hint="@string/hint_email"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/et_email"
+                            android:inputType="textEmailAddress"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/in_password"
+                        app:errorEnabled="true"
+                        android:hint="Masukkan password"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        android:layout_width="match_parent"
+                        app:passwordToggleEnabled="true"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/et_password"
+                            android:inputType="textPassword"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Spinner
+                        android:layout_marginBottom="10dp"
+                        android:id="@+id/spinner_role"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:id="@+id/btn_login"
+                        android:text="Login"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/colorButton"
+                        android:layout_height="56dp"/>
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_margin="8dp"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginEnd="3dp"
+                    android:text="register penyewa"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_register_penyewa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:text="register pemilik"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_register_pemilik"
                     android:layout_width="match_parent"
-                    android:id="@+id/btn_login"
-                    android:text="Login"
-                    android:textAllCaps="false"
-                    android:backgroundTint="@color/colorButton"
-                    android:layout_height="56dp"/>
+                    android:layout_height="wrap_content"/>
+
             </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </ScrollView>
+        </LinearLayout>
+    </RelativeLayout>
 
 
-    <LinearLayout
-        android:layout_margin="8dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_marginEnd="3dp"
-            android:text="register penyewa"
-            android:layout_weight="1"
-            android:id="@+id/btn_register_penyewa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:text="register pemilik"
-            android:layout_weight="1"
-            android:id="@+id/btn_register_pemilik"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</ScrollView>

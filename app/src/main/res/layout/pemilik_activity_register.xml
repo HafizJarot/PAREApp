@@ -1,38 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
+    tools:context=".activiities.pemilik.register.PemilikRegisterActivity"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="10dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activiities.pemilik.register.PemilikRegisterActivity">
+    android:layout_height="match_parent">
 
-
-<!--    <com.github.florent37.shapeofview.shapes.ArcView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="300dp"-->
-<!--        app:shape_arc_cropDirection="outside"-->
-<!--        app:shape_arc_height="20dp"-->
-<!--        app:shape_arc_position="bottom">-->
-
-<!--        <FrameLayout-->
-<!--            android:background="@android:color/darker_gray"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="300dp"/>-->
-
-<!--    </com.github.florent37.shapeofview.shapes.ArcView>-->
-
-    <ScrollView
-        android:layout_margin="10dp"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
             android:elevation="1dp"
             app:cardCornerRadius="8dp"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:layout_gravity="center_vertical"
-            app:cardUseCompatPadding="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -178,6 +163,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-    </ScrollView>
+    </LinearLayout>
 
-</RelativeLayout>
+
+</ScrollView>

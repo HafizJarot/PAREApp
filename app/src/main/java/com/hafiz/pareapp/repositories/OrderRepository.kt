@@ -1,9 +1,13 @@
 package com.hafiz.pareapp.repositories
 
+import com.google.gson.GsonBuilder
+import com.hafiz.pareapp.models.CreateOrder
 import com.hafiz.pareapp.models.Order
 import com.hafiz.pareapp.webservices.ApiService
 import com.hafiz.pareapp.webservices.WrappedListResponse
 import com.hafiz.pareapp.webservices.WrappedResponse
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -11,30 +15,28 @@ import kotlin.Error
 
 class OrderRepository (private val api : ApiService){
 
-    fun orderStore(token : String, id_penyewa : String, id_produk : String, harga : String,
-                   tanggal_mulai_sewa : String, selesai_sewa : String, sisi : String, result : (Boolean, Error?)->Unit){
+    fun orderStore(token : String, createOrder: CreateOrder, result : (Boolean, Error?)->Unit){
+        val g = GsonBuilder().create()
+        val json = g.toJson(createOrder)
+        val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
+        api.createOrder(token, body).enqueue(object : Callback<WrappedResponse<CreateOrder>>{
+            override fun onFailure(call: Call<WrappedResponse<CreateOrder>>, t: Throwable) {
+                result(false, Error(t.message))
+            }
 
-        api.orderStore(token, id_penyewa.toInt(), id_produk.toInt(), harga.toInt(), tanggal_mulai_sewa, selesai_sewa, sisi)
-            .enqueue(object : Callback<WrappedResponse<Order>>{
-                override fun onFailure(call: Call<WrappedResponse<Order>>, t: Throwable) {
-                    result(false, Error(t.message))
-                }
-
-                override fun onResponse(call: Call<WrappedResponse<Order>>, response: Response<WrappedResponse<Order>>) {
-                    if (response.isSuccessful){
-                        val body  = response.body()
-                        if (body?.status!!){
-                            result(true, null)
-                        }else{
-                            result(false, Error(body.message))
-                        }
+            override fun onResponse(call: Call<WrappedResponse<CreateOrder>>, response: Response<WrappedResponse<CreateOrder>>) {
+                if (response.isSuccessful){
+                    val body  = response.body()
+                    if (body?.status!!){
+                        result(true, null)
                     }else{
-                        result(false, Error(response.message()))
+                        result(false, Error(body.message))
                     }
+                }else{
+                    result(false, Error(response.message()))
                 }
-
-            })
-
+            }
+        })
     }
 
     fun getPenyewaMyOrders(token: String, result : (List<Order>?, Error?)-> Unit){

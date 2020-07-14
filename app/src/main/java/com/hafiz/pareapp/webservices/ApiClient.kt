@@ -98,17 +98,24 @@ interface ApiService {
         @Part image: MultipartBody.Part
     ): Call<WrappedResponse<Produk>>
 
-    @FormUrlEncoded
+//    @FormUrlEncoded
+//    @POST("api/order/store")
+//    fun orderStore(
+//        @Header("Authorization") token: String,
+//        @Field("id_pemilik") id_pemilik: Int,
+//        @Field("id_produk") id_produk: Int,
+//        @Field("harga") harga: Int,
+//        @Field("tanggal_mulai_sewa") tanggal_mulai_sewa: String,
+//        @Field("selesai_sewa") selesai_sewa: String,
+//        @Field("sisi") sisi: String
+//    ): Call<WrappedResponse<Order>>
+
+    @Headers("Content-Type: application/json")
     @POST("api/order/store")
-    fun orderStore(
+    fun createOrder(
         @Header("Authorization") token: String,
-        @Field("id_pemilik") id_pemilik: Int,
-        @Field("id_produk") id_produk: Int,
-        @Field("harga") harga: Int,
-        @Field("tanggal_mulai_sewa") tanggal_mulai_sewa: String,
-        @Field("selesai_sewa") selesai_sewa: String,
-        @Field("sisi") sisi: String
-    ): Call<WrappedResponse<Order>>
+        @Body body: RequestBody
+    ) : Call<WrappedResponse<CreateOrder>>
 
     @GET("api/order/penyewa")
     fun getPenyewaMyOrders(

@@ -18,3 +18,13 @@ data class Order(
     @SerializedName("pemilik") var pemilik: User,
     @SerializedName("produk") var produk: Produk
 ) : Parcelable
+
+data class CreateOrder(
+    @SerializedName("id_pemilik") var idPemilik : String,
+    @SerializedName("id_produk") var idProduk : String,
+    @SerializedName("harga") var harga: String,
+    @SerializedName("tanggal_mulai_sewa") var tanggalMulaiSewa: String,
+    @SerializedName("selesai_sewa") var selesaiSewa : String,
+    @SerializedName("sisi") var sisi : String,
+    @SerializedName("status") var status : String? = null
+)
