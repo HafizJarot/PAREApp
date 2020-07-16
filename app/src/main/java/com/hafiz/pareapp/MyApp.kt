@@ -11,6 +11,7 @@ import com.hafiz.pareapp.fragments.pemilik.home.PemilikHomeViewModel
 import com.hafiz.pareapp.fragments.pemilik.order.PemilikMyOrderViewModel
 import com.hafiz.pareapp.fragments.penyewa.home.PenyewaHomeViewModel
 import com.hafiz.pareapp.fragments.penyewa.order.PenyewaMyOrderViewModel
+import com.hafiz.pareapp.repositories.FirebaseRepository
 import com.hafiz.pareapp.repositories.OrderRepository
 import com.hafiz.pareapp.repositories.ProdukRepository
 import com.hafiz.pareapp.repositories.UserRepository
@@ -33,7 +34,10 @@ class MyApp : Application(){
     }
 }
 
-val retrofitModule = module { single { ApiClient.instance() } }
+val retrofitModule = module {
+    single { ApiClient.instance() }
+    single { FirebaseRepository() }
+}
 
 val repositoryModules = module {
     factory { ProdukRepository(get()) }
@@ -44,7 +48,7 @@ val repositoryModules = module {
 val viewModelModules = module {
 
     viewModel { PenyewaRegisterViewModel(get()) }
-    viewModel { PemilikRegisterViewModel(get()) }
+    viewModel { PemilikRegisterViewModel(get(),get()) }
 
     viewModel { PemilikHomeViewModel(get()) }
     viewModel { PemilikProdukViewModel(get()) }

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.hafiz.pareapp.R
+import com.hafiz.pareapp.activiities.penyewa.main.PenyewaMainActivity
 import com.hafiz.pareapp.fragments.penyewa.order.PenyewaMyOrderFragment
 import com.hafiz.pareapp.models.CreateOrder
 import com.hafiz.pareapp.models.Produk
@@ -37,7 +38,7 @@ class PenyewaOrderActivity : AppCompatActivity() {
         when(it){
             is PenyewaOrderState.IsLoading -> btn_order.isEnabled = !it.state
             is PenyewaOrderState.ShowToast -> toast(it.message)
-            is PenyewaOrderState.Success -> startActivity(Intent(this@PenyewaOrderActivity, PenyewaMyOrderFragment::class.java ))
+            is PenyewaOrderState.Success -> startActivity(Intent(this@PenyewaOrderActivity, PenyewaMainActivity::class.java ))
         }
     }
 

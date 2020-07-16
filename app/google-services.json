@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "205892902273",
+    "firebase_url": "https://pare-mobile.firebaseio.com",
+    "project_id": "pare-mobile",
+    "storage_bucket": "pare-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:205892902273:android:10d537e1afe0518cac5c80",
+        "android_client_info": {
+          "package_name": "com.hafiz.pareapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "205892902273-atkpjvjonucttgsrm73p1vap4n40bk6s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzihoDn_aPf82tXdKy1IEnJAP1Cyk0UNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "205892902273-atkpjvjonucttgsrm73p1vap4n40bk6s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:205892902273:android:1fe15de1886ccf1eac5c80",
+        "android_client_info": {
+          "package_name": "com.travelme.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "205892902273-d3p9epbg93lb1accgprsqihjjv3hiqh5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.travelme.customer",
+            "certificate_hash": "e74d6abee37b53897a285f8ea56774559ab787e2"
+          }
+        },
+        {
+          "client_id": "205892902273-atkpjvjonucttgsrm73p1vap4n40bk6s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzihoDn_aPf82tXdKy1IEnJAP1Cyk0UNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "205892902273-atkpjvjonucttgsrm73p1vap4n40bk6s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

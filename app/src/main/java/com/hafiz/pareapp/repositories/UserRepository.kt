@@ -58,8 +58,9 @@ class UserRepository (private val api : ApiService) : UserContract{
         })
     }
 
-    fun registerPemilik(user : RegisterPemilik, result: (RegisterPemilik?, Error?) -> Unit){
+    fun registerPemilik(user : RegisterPemilik, fcmToken : String, result: (RegisterPemilik?, Error?) -> Unit){
         val g = GsonBuilder().create()
+        user.fcm_token = fcmToken
         val json = g.toJson(user)
         val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
         api.regiserPemilik(body).enqueue(object : Callback<WrappedResponse<RegisterPemilik>>{

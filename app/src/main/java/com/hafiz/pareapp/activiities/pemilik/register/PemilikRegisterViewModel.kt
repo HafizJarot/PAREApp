@@ -3,11 +3,16 @@ package com.hafiz.pareapp.activiities.pemilik.register
 import androidx.lifecycle.ViewModel
 import com.hafiz.pareapp.models.RegisterPemilik
 import com.hafiz.pareapp.models.User
+import com.hafiz.pareapp.repositories.FirebaseRepository
 import com.hafiz.pareapp.repositories.UserRepository
 import com.hafiz.pareapp.utils.PareUtils
 import com.hafiz.pareapp.utils.SingleLiveEvent
+import com.hafiz.pareapp.utils.SingleResponse
+import java.lang.Error
 
-class PemilikRegisterViewModel (private val userRepository: UserRepository) : ViewModel(){
+class PemilikRegisterViewModel (
+    private val userRepository: UserRepository,
+    private val firebaseRepository: FirebaseRepository) : ViewModel(){
     private val state : SingleLiveEvent<PemilikRegisterState> = SingleLiveEvent()
     private fun setLoading() { state.value = PemilikRegisterState.IsLoading(true) }
     private fun hideLoading() { state.value = PemilikRegisterState.IsLoading(false) }
@@ -89,11 +94,37 @@ class PemilikRegisterViewModel (private val userRepository: UserRepository) : Vi
 
     fun register(user: RegisterPemilik){
         setLoading()
-        userRepository.registerPemilik(user){resultUser, error ->
-            hideLoading()
-            error?.let { it.message?.let { message-> toast(message) } }
-            resultUser?.let { success(it.email!!) }
-        }
+        generateTokenFirebase(user)
+//        userRepository.registerPemilik(user){resultUser, error ->
+//
+//            error?.let { it.message?.let { message-> toast(message) } }
+//            resultUser?.let { success(it.email!!) }
+//        }
+    }
+
+    fun generateTokenFirebase(user: RegisterPemilik){
+        setLoading()
+        firebaseRepository.generateFcmToken(object : SingleResponse<String>{
+            override fun onSuccess(data: String?) {
+                hideLoading()
+                data?.let { token ->
+                    userRepository.registerPemilik(user, token){resultUser, error ->
+                        error?.let { it.message?.let { message->
+                            toast(message) }
+                        }
+                        resultUser?.let {
+                            success(it.email!!)
+                        }
+                    }
+                }
+
+            }
+            override fun onFailure(err: Error) {
+                hideLoading()
+                toast(err.message.toString())
+            }
+        })
+
     }
 
     fun listenToState() = state

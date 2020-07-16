@@ -25,7 +25,8 @@ data class RegisterPemilik(
     @SerializedName("email") var email : String? = null,
     @SerializedName("password") var password : String? = null,
     @SerializedName("alamat") var alamat : String? = null,
-    @SerializedName("no_hp") var no_hp : String? = null
+    @SerializedName("no_hp") var no_hp : String? = null,
+    @SerializedName("fcm_token") var fcm_token : String? = null
 )
 
 data class RegisterPenyewa(
