@@ -38,6 +38,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun isLoading(b: Boolean){
         btn_login.isEnabled = !b
+        btn_register_pemilik.isEnabled = !b
+        btn_register_penyewa.isEnabled = !b
         loading.isIndeterminate = b
     }
 

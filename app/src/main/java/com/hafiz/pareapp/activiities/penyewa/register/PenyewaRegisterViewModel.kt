@@ -67,7 +67,7 @@ class PenyewaRegisterViewModel (private val userRepository: UserRepository) : Vi
 
     fun register(nama : String, email: String, pass : String,alamat: String){
         setLoading()
-        userRepository.registerPenyewa(nama, email, pass, alamat){resultRegister, error ->
+        userRepository.registerPenyewa(nama, email, pass, alamat){ resultRegister, error ->
             hideLoading()
             error?.let { it.message?.let { message -> toast(message) } }
             resultRegister?.let {

@@ -46,7 +46,7 @@ class PemilikProdukViewModel (private val produkRepository: ProdukRepository) : 
             }
         }
         if (sisi.isEmpty()){
-            state.value = PemilikProdukState.Validate(sisi = "sisi tidak boleh kosong")
+            toast("sisi tidak boleh kosong")
             return false
         }
         return true

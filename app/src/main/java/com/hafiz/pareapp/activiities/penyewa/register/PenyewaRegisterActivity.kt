@@ -27,6 +27,7 @@ class PenyewaRegisterActivity : AppCompatActivity(){
 
     private fun handleUI(it: PenyewaRegisterState) {
         when(it){
+
             is PenyewaRegisterState.IsLoading -> {
                 if (it.state){
                     btn_buat_akun.disable()

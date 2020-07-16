@@ -26,35 +26,43 @@ class PemilikRegisterActivity : AppCompatActivity(){
         register()
     }
 
+    private fun isLoading (b:Boolean){
+        btn_register.isEnabled = !b
+        if (b){
+            loading.visible()
+        }else{
+            loading.gone()
+        }
+    }
+
+    private fun resetError(){
+        setNoIzinError(null)
+        setNamaPerusahaanError(null)
+        setEmailError(null)
+        setPasswordError(null)
+        setConfirmPasswordError(null)
+        setNoHpError(null)
+        setAlamatError(null)
+    }
+
+    private fun validateError (it:PemilikRegisterState.Validate){
+        setNoIzinError(it.noIzin)
+        setNamaPerusahaanError(it.namaPerusahaan)
+        setEmailError(it.email)
+        setPasswordError(it.password)
+        setConfirmPasswordError(it.confirmPassword)
+        setNoHpError(it.noHp)
+        setAlamatError(it.alamat)
+    }
+
+
     private fun handleUI(it: PemilikRegisterState) {
         when(it){
             is PemilikRegisterState.ShowToast -> toast(it.mesagge)
-            is PemilikRegisterState.IsLoading -> {
-                if (it.state){
-                    loading.visible()
-                }else{
-                    loading.gone()
-                }
-            }
+            is PemilikRegisterState.IsLoading -> isLoading(it.state)
             is PemilikRegisterState.Success -> success(it.email)
-            is PemilikRegisterState.Reset -> {
-                setNoIzinError(null)
-                setNamaPerusahaanError(null)
-                setEmailError(null)
-                setPasswordError(null)
-                setConfirmPasswordError(null)
-                setNoHpError(null)
-                setAlamatError(null)
-            }
-            is PemilikRegisterState.Validate -> {
-                setNoIzinError(it.noIzin)
-                setNamaPerusahaanError(it.namaPerusahaan)
-                setEmailError(it.email)
-                setPasswordError(it.password)
-                setConfirmPasswordError(it.confirmPassword)
-                setNoHpError(it.noHp)
-                setAlamatError(it.alamat)
-            }
+            is PemilikRegisterState.Reset -> resetError()
+            is PemilikRegisterState.Validate -> validateError(it)
         }
     }
 

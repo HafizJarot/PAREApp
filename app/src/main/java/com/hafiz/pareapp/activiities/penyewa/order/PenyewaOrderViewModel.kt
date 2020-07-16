@@ -31,7 +31,9 @@ class PenyewaOrderViewModel (private val userRepository: UserRepository, private
         orderRepository.orderStore(token, createOrder){resultBool, error->
             hideLoading()
             error?.let { it.message?.let { message-> toast(message) } }
-            if (resultBool){ success() }
+            if (resultBool){
+                success()
+            }
         }
     }
 

@@ -108,7 +108,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/til_confirm_password"
                     app:errorEnabled="true"
-                    android:hint="Konfirmasi assword"
+                    android:hint="Konfirmasi password"
                     app:boxBackgroundColor="@android:color/transparent"
                     android:layout_width="match_parent"
                     app:passwordToggleEnabled="true"
@@ -154,9 +154,8 @@
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="match_parent"
                     android:id="@+id/btn_register"
-                    android:text="buat akun"
+                    android:text="BUAT AKUN"
                     android:textAllCaps="false"
-                    android:backgroundTint="@color/colorButton"
                     android:layout_height="56dp"/>
 
             </LinearLayout>

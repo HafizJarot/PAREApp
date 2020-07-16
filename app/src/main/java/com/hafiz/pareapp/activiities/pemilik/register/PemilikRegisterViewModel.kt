@@ -106,18 +106,22 @@ class PemilikRegisterViewModel (
         setLoading()
         firebaseRepository.generateFcmToken(object : SingleResponse<String>{
             override fun onSuccess(data: String?) {
-                hideLoading()
                 data?.let { token ->
                     userRepository.registerPemilik(user, token){resultUser, error ->
-                        error?.let { it.message?.let { message->
+                        error?.let {
+                            hideLoading()
+                            it.message?.let { message->
                             toast(message) }
                         }
                         resultUser?.let {
+                            hideLoading()
                             success(it.email!!)
                         }
                     }
+                } ?: run{
+                    toast("Cannot get fcm token")
+                    hideLoading()
                 }
-
             }
             override fun onFailure(err: Error) {
                 hideLoading()
