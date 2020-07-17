@@ -6,18 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.github.florent37.shapeofview.shapes.RoundRectView
+    <com.github.florent37.shapeofview.shapes.ArcView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:shape_roundRect_bottomLeftRadius="10dp"
-        app:shape_roundRect_bottomRightRadius="10dp">
+        android:elevation="0dp"
+        app:shape_arc_height="30dp"
+        app:shape_arc_position="bottom">
 
         <FrameLayout
             android:background="@drawable/grad_bg"
             android:layout_width="match_parent"
             android:layout_height="300dp"/>
 
-    </com.github.florent37.shapeofview.shapes.RoundRectView>
+    </com.github.florent37.shapeofview.shapes.ArcView>
 
     <ImageView
         android:layout_centerHorizontal="true"

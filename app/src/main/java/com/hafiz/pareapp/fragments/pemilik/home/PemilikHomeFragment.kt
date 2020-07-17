@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hafiz.pareapp.R
 import com.hafiz.pareapp.activiities.pemilik.produk.PemilikProdukActivity
@@ -23,7 +24,7 @@ class PemilikHomeFragment :Fragment(R.layout.pemilik_fragment_home){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         rv_home.apply {
             adapter = PemilikProdukAdapter(mutableListOf(), activity!!)
-            layoutManager = LinearLayoutManager(activity!!)
+            layoutManager = GridLayoutManager(requireActivity(),2)
         }
 
         pemilikHomeViewModel.listenToState().observer(viewLifecycleOwner, Observer { handleui(it) })

@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hafiz.pareapp.R
 import com.hafiz.pareapp.adapters.pemilik.PemilikMyOrderAdapter
@@ -50,7 +51,7 @@ class PemilikMyOrderFragment : Fragment(R.layout.pemilik_fragment_my_order){
     private fun setupUI() {
         rv_pemilik_my_order.apply {
             adapter = PemilikMyOrderAdapter(mutableListOf(), requireActivity())
-            layoutManager = LinearLayoutManager(requireActivity())
+            layoutManager = GridLayoutManager(requireActivity(),2)
         }
     }
 

@@ -7,10 +7,20 @@
     android:orientation="vertical"
     tools:context=".activiities.pemilik.produk.PemilikProdukActivity">
 
-    <FrameLayout
-        android:background="@drawable/grad_bg"
+    <com.github.florent37.shapeofview.shapes.ArcView
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="wrap_content"
+        android:elevation="0dp"
+        app:shape_arc_height="25dp"
+        app:shape_arc_position="bottom">
+
+        <FrameLayout
+            android:background="@drawable/grad_bg"
+            android:layout_width="match_parent"
+            android:layout_height="310dp"/>
+
+    </com.github.florent37.shapeofview.shapes.ArcView>
+
 
     <ScrollView
         android:layout_width="match_parent"

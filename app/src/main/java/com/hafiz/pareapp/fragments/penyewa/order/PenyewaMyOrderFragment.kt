@@ -2,9 +2,11 @@ package com.hafiz.pareapp.fragments.penyewa.order
 
 import android.os.Bundle
 import android.view.View
+import android.widget.GridLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hafiz.pareapp.R
 import com.hafiz.pareapp.adapters.penyewa.PenyewaMyOrderAdapter
@@ -24,7 +26,7 @@ class PenyewaMyOrderFragment : Fragment(R.layout.penyewa_fragment_my_order){
 
         rv_penyewa_my_order.apply {
             adapter = PenyewaMyOrderAdapter(mutableListOf(), requireActivity())
-            layoutManager = LinearLayoutManager(requireActivity())
+            layoutManager = GridLayoutManager(requireActivity(), 2)
         }
         penyewaMyOrderViewModel.listenToState().observer(viewLifecycleOwner, Observer { handleUI(it) })
         penyewaMyOrderViewModel.listenToOrders().observe(viewLifecycleOwner, Observer { handleOrder(it) })
