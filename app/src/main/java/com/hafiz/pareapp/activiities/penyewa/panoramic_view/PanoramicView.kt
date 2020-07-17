@@ -6,7 +6,6 @@ import kotlinx.android.synthetic.main.activity_panoramic_view.*
 import android.view.WindowManager
 import com.google.vr.sdk.widgets.pano.VrPanoramaView
 import android.view.View
-import com.google.vr.sdk.widgets.pano.VrPanoramaEventListener
 
 class PanoramicView : AppCompatActivity() {
     private var backgroundImageLoaderTask: ImageLoaderTask? = null
@@ -36,14 +35,16 @@ class PanoramicView : AppCompatActivity() {
         }
         val viewOptions = VrPanoramaView.Options()
         viewOptions.inputType = VrPanoramaView.Options.TYPE_MONO
-        task = ImageLoaderTask(pano_view, viewOptions, getUriImage())
-        task.execute(this.assets)
-        backgroundImageLoaderTask = task
-        loading.visibility = View.GONE
+        getUriImage()?.let {
+            task = ImageLoaderTask(pano_view, viewOptions, it)
+            task!!.execute(this.assets)
+            backgroundImageLoaderTask = task
+            loading.visibility = View.GONE
+        }
     }
 
-    private fun getUriImage(): String {
-        return "https://video.360cities.net/new-gamer-x/01744171_360_VR_VIDEO___PARACHUTE_JUMP_FROM_A_HEIGHT_OF_10000_METERS-1024x512.jpg"
+    private fun getUriImage(): String? {
+        return intent.getStringExtra("url")
     }
 
 }

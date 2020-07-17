@@ -136,6 +136,7 @@ class ProdukRepository (private val api : ApiService) {
             }
 
             override fun onResponse(call: Call<WrappedListResponse<Produk>>, response: Response<WrappedListResponse<Produk>>) {
+                println("ydhnwb -> ${response.body()}")
                 if (response.isSuccessful){
                     val body = response.body()
                     if (body?.status!!){

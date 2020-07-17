@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.content.res.AssetManager
 import android.os.AsyncTask
 import android.util.Log
+import android.widget.Toast
 import java.io.IOException
 import java.lang.ref.WeakReference
 import java.net.HttpURLConnection
@@ -48,10 +49,20 @@ class ImageLoaderTask(view: VrPanoramaView, private val viewOptions: VrPanoramaV
     override fun onPostExecute(bitmap: Bitmap?) {
         val vw = viewReference.get()
         if (vw != null && bitmap != null) {
-            vw.loadImageFromBitmap(bitmap, viewOptions)
+            if(checkIs360(bitmap)){
+                vw.loadImageFromBitmap(bitmap, viewOptions)
+            }else{
+                Toast.makeText(vw.context, "Bukan gambar 360", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
+    private fun checkIs360(bitmap: Bitmap): Boolean {
+        val width  = bitmap.width
+        val height = bitmap.height
+        val ratio  = width/2
+        return ratio >= height
+    }
 
     companion object {
         private val TAG = "ImageLoaderTask"

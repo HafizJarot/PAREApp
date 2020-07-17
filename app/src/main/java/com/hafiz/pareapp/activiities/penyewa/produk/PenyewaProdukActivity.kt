@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hafiz.pareapp.MyOnClickListener
 import com.hafiz.pareapp.R
@@ -26,7 +27,7 @@ class PenyewaProdukActivity : AppCompatActivity(), MyOnClickListener {
 
         rv_penyewa_produk.apply {
             adapter = PenyewaProdukAdapter(mutableListOf(), this@PenyewaProdukActivity)
-            layoutManager = LinearLayoutManager(this@PenyewaProdukActivity)
+            layoutManager = GridLayoutManager(this@PenyewaProdukActivity, 2)
         }
 
         penyewaProdukViewModel.listenToState().observer(this, Observer { handleui(it) })
