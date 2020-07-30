@@ -48,12 +48,12 @@ class PemilikMainActivity : AppCompatActivity() {
                         navStatus = 1
                     }
                 }
-                R.id.navigation_notifications -> {
-                    if (navStatus != 2) {
-                        fragment = NotificationsFragment()
-                        navStatus = 2
-                    }
-                }
+//                R.id.navigation_notifications -> {
+//                    if (navStatus != 2) {
+//                        fragment = NotificationsFragment()
+//                        navStatus = 2
+//                    }
+//                }
                 R.id.navigation_profile -> {
                     if (navStatus != 3) {
                         fragment =

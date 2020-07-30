@@ -17,6 +17,16 @@
     <color name="colorPrimaryDark">#4682B4</color>
     <color name="colorAccent">#4682B4</color>
 
+    <color name="headings">#4682B4</color>
+    <color name="solidCircle">#22D6B0</color>
+    <color name="circleBorder">#DDF8F8</color>
+    <color name="gradProfilEnd">#8E5BEC</color>
+    <color name="gradProfilStart">#5DEBF8</color>
+    <color name="gradtop">#8E5BEC</color>
+    <color name="gradbottom">#5DEBF8</color>
+    <color name="grey">#E5E5E5</color>
+
+
 
     <!--    primary        : #23A7D8-->
 <!--    primary dark   : #2347D8-->

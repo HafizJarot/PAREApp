@@ -11,21 +11,9 @@ class PenyewaHomeViewModel (private val produkRepository: ProdukRepository) : Vi
     private val state : SingleLiveEvent<PenyewaHomeState> = SingleLiveEvent()
     private val produks = MutableLiveData<List<Produk>>()
 
-    private fun setLoading() { state.value =
-        PenyewaHomeState.IsLoading(
-            true
-        )
-    }
-    private fun hideLoading() { state.value =
-        PenyewaHomeState.IsLoading(
-            false
-        )
-    }
-    private fun toast(message: String) { state.value =
-        PenyewaHomeState.ShowToast(
-            message
-        )
-    }
+    private fun setLoading() { state.value = PenyewaHomeState.IsLoading(true) }
+    private fun hideLoading() { state.value = PenyewaHomeState.IsLoading(false) }
+    private fun toast(message: String) { state.value = PenyewaHomeState.ShowToast(message) }
 
     fun getProduksPenyewa(token : String){
         setLoading()

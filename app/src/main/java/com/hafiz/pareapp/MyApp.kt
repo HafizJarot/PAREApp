@@ -9,8 +9,10 @@ import com.hafiz.pareapp.activiities.penyewa.produk.PenyewaProdukViewModel
 import com.hafiz.pareapp.activiities.penyewa.register.PenyewaRegisterViewModel
 import com.hafiz.pareapp.fragments.pemilik.home.PemilikHomeViewModel
 import com.hafiz.pareapp.fragments.pemilik.order.PemilikMyOrderViewModel
+import com.hafiz.pareapp.fragments.pemilik.profile.PemilikProfileViewModel
 import com.hafiz.pareapp.fragments.penyewa.home.PenyewaHomeViewModel
 import com.hafiz.pareapp.fragments.penyewa.order.PenyewaMyOrderViewModel
+import com.hafiz.pareapp.fragments.penyewa.profile.PenyewaProfileViewModel
 import com.hafiz.pareapp.repositories.FirebaseRepository
 import com.hafiz.pareapp.repositories.OrderRepository
 import com.hafiz.pareapp.repositories.ProdukRepository
@@ -51,9 +53,9 @@ val viewModelModules = module {
     viewModel { PemilikRegisterViewModel(get(),get()) }
 
     viewModel { PemilikHomeViewModel(get()) }
-    viewModel { PemilikProdukViewModel(get()) }
     viewModel { PemilikMyOrderViewModel(get()) }
-
+    viewModel { PemilikProdukViewModel(get()) }
+    viewModel { PemilikProfileViewModel(get()) }
 
     viewModel { LoginViewModel(get()) }
     viewModel { PenyewaOrderViewModel(get(),get()) }
@@ -61,4 +63,5 @@ val viewModelModules = module {
 
     viewModel { PenyewaHomeViewModel(get()) }
     viewModel { PenyewaMyOrderViewModel(get()) }
+    viewModel { PenyewaProfileViewModel(get()) }
 }

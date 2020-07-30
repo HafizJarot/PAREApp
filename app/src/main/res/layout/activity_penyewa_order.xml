@@ -110,7 +110,7 @@
             <Button
                 android:enabled="false"
                 android:text="order"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:layout_marginTop="10dp"
                 android:id="@+id/btn_order"
                 android:backgroundTint="#4682B4"

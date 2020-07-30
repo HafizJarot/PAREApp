@@ -11,6 +11,7 @@ data class User(
     @SerializedName("nama_perusahaan") var nama_perusahaan : String? = null,
     @SerializedName("nama") var name : String? = null,
     @SerializedName("email") var email : String? = null,
+
     @SerializedName("api_token") var token : String? = null,
     @SerializedName("active") var active : Boolean? = null,
     @SerializedName("alamat") var alamat : String? = null,

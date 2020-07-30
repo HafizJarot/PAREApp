@@ -21,6 +21,7 @@ import com.hafiz.pareapp.utils.PareUtils
 import kotlinx.android.synthetic.main.activity_pemilik_produk.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,13 +35,22 @@ class PemilikProdukActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pemilik_produk)
+        isUpdate()
+        observe()
         chooseImage()
         et_masaberdiri.isFocusableInTouchMode = false
         setSpinner()
         setDate()
-        pemilikProdukViewModel.listenToState().observer(this@PemilikProdukActivity, Observer { handleUI(it) })
         fill()
     }
+
+    private fun observe(){
+        observeState()
+        observeCurrentProduct()
+    }
+
+    private fun observeState() = pemilikProdukViewModel.listenToState().observer(this, Observer { handleUI(it) })
+    private fun observeCurrentProduct() = pemilikProdukViewModel.listenToCurrentProduct().observe(this, Observer { handleCurrentProduct(it) })
 
     private fun setSpinner(){
         val itemSisi = arrayOf("1", "2")
@@ -49,40 +59,63 @@ class PemilikProdukActivity : AppCompatActivity() {
         }
         spinner_sisi.adapter = adapter
         spinner_sisi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                sisi = itemSisi[position]
-            }
-
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { sisi = itemSisi[position] }
         }
     }
+
+    private fun isLoading(b: Boolean){
+        btn_store.isEnabled = !b
+    }
+
+    private fun resetError(){
+        setAlamatErr(null)
+        setKeteranganErr(null)
+        setLebarErr(null)
+        setMasaBerdiriErr(null)
+        setPanjangErr(null)
+        setHargaSewaErr(null)
+        //setSisiErr(null)
+    }
+
+    private fun validate(it: PemilikProdukState.Validate){
+        it.alamat?.let { setAlamatErr(it) }
+        it.harga_sewa?.let { setHargaSewaErr(it) }
+        it.keterangan?.let { setKeteranganErr(it) }
+        it.lebar?.let { setLebarErr(it) }
+        it.panjang?.let { setPanjangErr(it) }
+        it.masa_berdiri?.let { setMasaBerdiriErr(it) }
+    }
+
 
     private fun handleUI(it : PemilikProdukState){
         when(it){
             is PemilikProdukState.ShowToast -> toast(it.message)
-            is PemilikProdukState.IsLoading -> {
-                btn_store.isEnabled = !it.state
-            }
+            is PemilikProdukState.IsLoading -> isLoading(it.state)
             is PemilikProdukState.Success -> finish()
-            is PemilikProdukState.Reset -> {
-                setAlamatErr(null)
-                setKeteranganErr(null)
-                setLebarErr(null)
-                setMasaBerdiriErr(null)
-                setPanjangErr(null)
-                setHargaSewaErr(null)
-                //setSisiErr(null)
-            }
-            is PemilikProdukState.Validate -> {
-                it.alamat?.let { setAlamatErr(it) }
-                it.harga_sewa?.let { setHargaSewaErr(it) }
-                it.keterangan?.let { setKeteranganErr(it) }
-                it.lebar?.let { setLebarErr(it) }
-                it.panjang?.let { setPanjangErr(it) }
-                it.masa_berdiri?.let { setMasaBerdiriErr(it) }
+            is PemilikProdukState.SuccessUpdate -> finish()
+            is PemilikProdukState.Reset -> resetError()
+            is PemilikProdukState.Validate -> validate(it)
+        }
+    }
+
+
+    private fun handleCurrentProduct(product: Produk?){
+        product?.let {
+            getPassedProduk()?.let { p ->
+                et_panjang.setText(it.panjang.toString())
+                et_lebar.setText(it.lebar.toString())
+                et_masaberdiri.setText((it.masa_berdiri))
+                et_keterangan.setText(it.keterangan.toString())
+                et_hargasewa.setText(it.harga_sewa.toString())
+                et_alamat.setText(it.alamat)
+                if(it.foto != null && !it.foto.toString().startsWith("/storage")){
+                    iv_product.load(it.foto)
+                }else if(it.foto != null){
+                    iv_product.load(File(it.foto.toString()))
+                }else{}
+            } ?: kotlin.run {
+                iv_product.load(File(it.foto.toString()))
             }
         }
     }
@@ -93,7 +126,6 @@ class PemilikProdukActivity : AppCompatActivity() {
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
             val myFormat = "yyyy-MM-dd"
             val simpleDateFormat = SimpleDateFormat(myFormat, Locale.US)
             et_masaberdiri.setText(simpleDateFormat.format(cal.time))
@@ -106,16 +138,18 @@ class PemilikProdukActivity : AppCompatActivity() {
         }
     }
 
+    private fun onPhotoReturned(imgPath : String){
+        pemilikProdukViewModel.setCurrentProductImage(imgPath)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == IMAGE_REQ_CODE && resultCode == Activity.RESULT_OK && data != null){
             val selectedImageUri = data.getStringArrayListExtra(Pix.IMAGE_RESULTS)
-            selectedImageUri?.let {
-                iv_product.load(File(it[0]))
-                imageUrl = it[0]
-            }
+            selectedImageUri?.let { onPhotoReturned(it[0]) }
         }
     }
+
 
     @SuppressLint("SetTextI18n")
     private fun fill(){
@@ -131,51 +165,68 @@ class PemilikProdukActivity : AppCompatActivity() {
                 val harga_sewa = et_hargasewa.text.toString().trim()
                 val alamat = et_alamat.text.toString().trim()
                 val sisi = sisi
-
-                if (pemilikProdukViewModel.validate(masa_berdiri, keterangan, harga_sewa,panjang, lebar, alamat, imageUrl, sisi)){
-                    val kirimKeProduk = Produk(panjang = panjang.toInt(), lebar = lebar.toInt(), masa_berdiri = masa_berdiri,
-                        keterangan = keterangan, harga_sewa = harga_sewa.toInt(), alamat = alamat, sisi = sisi.toInt())
-                    pemilikProdukViewModel.tambahproduk(token, kirimKeProduk, imageUrl)
+                val foto = pemilikProdukViewModel.listenToCurrentProduct().value!!.foto.toString()
+                if (pemilikProdukViewModel.validate(masa_berdiri, keterangan, harga_sewa,panjang, lebar, alamat, foto, sisi)){
+                    val tempProduct = pemilikProdukViewModel.listenToCurrentProduct().value!!
+                    tempProduct.sisi = sisi.toInt()
+                    tempProduct.panjang = panjang.toInt()
+                    tempProduct.lebar = lebar.toInt()
+                    tempProduct.masa_berdiri = masa_berdiri
+                    tempProduct.keterangan = keterangan
+                    tempProduct.harga_sewa = harga_sewa.toInt()
+                    tempProduct.alamat = alamat
+                    pemilikProdukViewModel.tambahproduk(token, tempProduct, foto)
                 }else{
                     toast("not valid")
                 }
             }
         }else{
-            isUpdate()
             label_produk.text = "Update Papan Reklame"
             btn_store.text = "update"
             btn_store.setOnClickListener {
-                val token = "Bearer ${PareUtils.getToken(this@PemilikProdukActivity)}"
-                val panjang = et_panjang.text.toString().trim()
-                val lebar = et_lebar.text.toString().trim()
-                val masa_berdiri = et_masaberdiri.text.toString().trim()
-                val keterangan = et_keterangan.text.toString().trim()
-                val harga_sewa = et_hargasewa.text.toString().trim()
-                val alamat = et_alamat.text.toString().trim()
-                val _sisi = sisi
+                try{
+                    val token = "Bearer ${PareUtils.getToken(this@PemilikProdukActivity)}"
+                    val panjang = et_panjang.text.toString().trim()
+                    val lebar = et_lebar.text.toString().trim()
+                    val masa_berdiri = et_masaberdiri.text.toString().trim()
+                    val keterangan = et_keterangan.text.toString().trim()
+                    val harga_sewa = et_hargasewa.text.toString().trim()
+                    val alamat = et_alamat.text.toString().trim()
+                    val _sisi = sisi
 
+                    var foto : String? = null
+                    getPassedProduk()?.let { p ->
+                        val fotoFromViewModel = pemilikProdukViewModel.listenToCurrentProduct().value!!.foto
+                        foto = if(fotoFromViewModel.equals(p.foto)){ null }else{ fotoFromViewModel }
+                    }
 
-                if (pemilikProdukViewModel.validate(masa_berdiri, keterangan, harga_sewa,panjang, lebar, alamat, null, _sisi)){
-                    val kirimKeProduk = Produk(panjang = panjang.toInt(), lebar = lebar.toInt(), masa_berdiri = masa_berdiri,
-                        keterangan = keterangan, harga_sewa = harga_sewa.toInt(), alamat = alamat, sisi = _sisi.toInt())
-                    pemilikProdukViewModel.updateproduk(token, getPassedProduk()?.id.toString(), kirimKeProduk, imageUrl)
-                }else{
-                    toast("not valid")
+                    if (pemilikProdukViewModel.validate(masa_berdiri, keterangan, harga_sewa,panjang, lebar, alamat, foto, _sisi)){
+                        val tempProduct = pemilikProdukViewModel.listenToCurrentProduct().value!!
+                        tempProduct.sisi = sisi.toInt()
+                        tempProduct.panjang = panjang.toInt()
+                        tempProduct.lebar = lebar.toInt()
+                        tempProduct.masa_berdiri = masa_berdiri
+                        tempProduct.keterangan = keterangan
+                        tempProduct.harga_sewa = harga_sewa.toInt()
+                        tempProduct.alamat = alamat
+                        tempProduct.foto = foto
+                        pemilikProdukViewModel.updateproduk(token, getPassedProduk()?.id.toString(), tempProduct)
+                    }else{
+                        toast("not valid")
+                    }
+                }catch (e: Exception){
+                    toast(e.message.toString())
                 }
+
             }
         }
     }
 
     private fun isUpdate() {
         getPassedProduk()?.let {
-            et_panjang.setText(it.panjang.toString())
-            et_lebar.setText(it.lebar.toString())
-            et_masaberdiri.setText((it.masa_berdiri))
-            et_keterangan.setText(it.keterangan!!)
-            et_hargasewa.setText(it.harga_sewa.toString())
-            et_alamat.setText(it.alamat)
-            //spinner_sisi.setText(it.sisi.toString())
             iv_product.load(it.foto)
+            val p = Produk(it.id, it.panjang, it.lebar, it.sisi, it.foto, it.masa_berdiri, it.keterangan, it.harga_sewa, it.alamat, it.status)
+            pemilikProdukViewModel.setCurrentProduct(p)
         }
     }
 

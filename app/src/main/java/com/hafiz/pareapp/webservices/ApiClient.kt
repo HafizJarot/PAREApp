@@ -78,8 +78,17 @@ interface ApiService {
     @GET("api/user/profile")
     fun profile(@Header("Authorization") token: String): Call<WrappedResponse<User>>
 
+    @FormUrlEncoded
+    @POST("api/user/profile/update")
+    fun updateProfile(
+        @Header("Authorization") token : String,
+        @Field("name") name : String,
+        @Field("password") pass : String
+    ) : Call<WrappedResponse<User>>
+
     @GET("api/produk")
     fun getProdukPemilik(@Header("Authorization") token: String): Call<WrappedListResponse<Produk>>
+
 
     @Multipart
     @POST("api/produk/store")
@@ -89,14 +98,29 @@ interface ApiService {
         @Part image: MultipartBody.Part
     ): Call<WrappedResponse<Produk>>
 
-    @Multipart
+//    @Multipart
+//    @POST("api/produk/{id}/update")
+//    fun updateproduk(
+//        @Header("Authorization") token: String,
+//        @Path("id") id: Int? = null,
+//        @PartMap partMap: HashMap<String, RequestBody>,
+//        @Part image: MultipartBody.Part
+//    ): Call<WrappedResponse<Produk>>
+
     @POST("api/produk/{id}/update")
-    fun updateproduk(
+    fun updateProduk(
         @Header("Authorization") token: String,
         @Path("id") id: Int? = null,
-        @PartMap partMap: HashMap<String, RequestBody>,
-        @Part image: MultipartBody.Part
-    ): Call<WrappedResponse<Produk>>
+        @Body body: RequestBody
+    ) : Call<WrappedResponse<Produk>>
+
+    @Multipart
+    @POST("api/produk/{id}/update/photo")
+    fun updateProdukPhoto(
+        @Header("Authorization") token : String,
+        @Path("id") id : String,
+        @Part image : MultipartBody.Part
+    ) :Call<WrappedResponse<Produk>>
 
 //    @FormUrlEncoded
 //    @POST("api/order/store")
@@ -126,6 +150,15 @@ interface ApiService {
     fun getPemilikMyOrders(
         @Header("Authorization") token: String
     ): Call<WrappedListResponse<Order>>
+
+
+
+    @Multipart
+    @POST("api/profile/update/photo")
+    fun updatePhotoProfile(
+        @Header("Authorization") token : String,
+        @Part image : MultipartBody.Part
+    ) :Call<WrappedResponse<User>>
 
 }
 

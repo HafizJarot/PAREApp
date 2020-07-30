@@ -32,6 +32,7 @@
         <activity android:name=".activiities.pemilik.produk.PemilikProdukActivity" />
         <activity android:name=".activiities.penyewa.register.PenyewaRegisterActivity" />
         <activity android:name=".activiities.pemilik.register.PemilikRegisterActivity" />
+        <activity android:name=".activiities.penyewa.update_profile.UpdateProfileActivity"/>
         <activity
             android:name=".activiities.penyewa.detail.PenyewaDetailProdukActivity"
             android:label="@string/title_activity_penyewa_detail_produk"
