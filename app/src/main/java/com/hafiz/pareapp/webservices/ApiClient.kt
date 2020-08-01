@@ -122,6 +122,13 @@ interface ApiService {
         @Part image : MultipartBody.Part
     ) :Call<WrappedResponse<Produk>>
 
+
+    @GET("api/produk/{id}/delete")
+    fun deleteProduk(
+        @Header("Authorization") token : String,
+        @Path("id") id : Int
+    ) :Call<WrappedResponse<Produk>>
+
 //    @FormUrlEncoded
 //    @POST("api/order/store")
 //    fun orderStore(

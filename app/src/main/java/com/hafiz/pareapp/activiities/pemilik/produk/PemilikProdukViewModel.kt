@@ -17,6 +17,7 @@ class PemilikProdukViewModel (private val produkRepository: ProdukRepository) : 
     private fun hideLoading() { state.value = PemilikProdukState.IsLoading(false) }
     private fun success() { state.value = PemilikProdukState.Success }
     private fun successUpdate() { state.value = PemilikProdukState.SuccessUpdate }
+    private fun successDelete() { state.value = PemilikProdukState.SuccessDelete }
 
     fun validate(panjang: String, lebar: String, masa_berlaku: String, keterangan: String, harga_sewa: String, alamat: String, foto: String?, sisi : String) : Boolean{
         state.value = PemilikProdukState.Reset
@@ -127,6 +128,7 @@ sealed class PemilikProdukState{
     data class ShowToast(var message : String) : PemilikProdukState()
     object Success : PemilikProdukState()
     object SuccessUpdate : PemilikProdukState()
+    object SuccessDelete : PemilikProdukState()
     object Reset : PemilikProdukState()
     data class Validate(
         var masa_berdiri : String? = null,

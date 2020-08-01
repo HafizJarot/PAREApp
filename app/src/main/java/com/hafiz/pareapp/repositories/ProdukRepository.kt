@@ -17,9 +17,33 @@ import java.io.File
 interface ProdukContract{
     fun updateProduk(token: String, id : String, produk: Produk, listemer : SingleResponse<Produk>)
     fun updateProdukPhoto(token: String, id : String, urlFoto: String, listemer : SingleResponse<Produk>)
+    fun deleteProduk(token: String, id : String, listemer: SingleResponse<Produk>)
 }
 
 class ProdukRepository (private val api : ApiService) : ProdukContract {
+    override fun deleteProduk(token: String, id: String, listemer: SingleResponse<Produk>) {
+        api.deleteProduk(token, id.toInt()).enqueue(object : Callback<WrappedResponse<Produk>>{
+            override fun onFailure(call: Call<WrappedResponse<Produk>>, t: Throwable) {
+                listemer.onFailure(Error(t.message))
+            }
+
+            override fun onResponse(call: Call<WrappedResponse<Produk>>, response: Response<WrappedResponse<Produk>>) {
+                when{
+                    response.isSuccessful -> {
+                        val body = response.body()
+                        if (body?.status!!){
+                            listemer.onSuccess(body.data)
+                        }else{
+                            listemer.onFailure(Error(body.message))
+                        }
+                    }
+                    !response.isSuccessful -> listemer.onFailure(Error(response.message()))
+                }
+            }
+
+        })
+    }
+
     override fun updateProduk( token: String, id: String, produk: Produk, listemer: SingleResponse<Produk>) {
         produk.user =null
         val g = GsonBuilder().create()

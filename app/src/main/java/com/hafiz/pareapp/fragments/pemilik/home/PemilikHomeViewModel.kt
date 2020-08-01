@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.hafiz.pareapp.models.Produk
 import com.hafiz.pareapp.repositories.ProdukRepository
 import com.hafiz.pareapp.utils.SingleLiveEvent
+import com.hafiz.pareapp.utils.SingleResponse
+import java.lang.Error
 
 class PemilikHomeViewModel (private val produkRepository: ProdukRepository) : ViewModel(){
     private val state : SingleLiveEvent<PemilikHomeState> = SingleLiveEvent()
@@ -14,6 +16,7 @@ class PemilikHomeViewModel (private val produkRepository: ProdukRepository) : Vi
     private fun setLoading() { state.value = PemilikHomeState.IsLoading(true) }
     private fun hideLoading() { state.value = PemilikHomeState.IsLoading(false) }
     private fun success() { state.value = PemilikHomeState.Success }
+    private fun successDelete() { state.value = PemilikHomeState.SuccessDelete }
 
     fun getMyProduks(token : String){
         setLoading()
@@ -24,6 +27,23 @@ class PemilikHomeViewModel (private val produkRepository: ProdukRepository) : Vi
         }
     }
 
+
+    fun deleteProduk(token: String, id : String){
+        setLoading()
+        produkRepository.deleteProduk(token, id, object : SingleResponse<Produk> {
+            override fun onSuccess(data: Produk?) {
+                hideLoading()
+                data?.let { successDelete() }
+            }
+
+            override fun onFailure(err: Error) {
+                hideLoading()
+                toast(err.message.toString())
+            }
+
+        })
+    }
+
     fun listenToState() = state
     fun listenToProduks() = produks
 }
@@ -32,4 +52,5 @@ sealed class PemilikHomeState{
     data class ShowToast(var message : String) : PemilikHomeState()
     object Success : PemilikHomeState()
     object Reset : PemilikHomeState()
+    object SuccessDelete : PemilikHomeState()
 }

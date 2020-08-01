@@ -23,7 +23,7 @@ class PemilikHomeFragment :Fragment(R.layout.pemilik_fragment_home){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         rv_home.apply {
-            adapter = PemilikProdukAdapter(mutableListOf(), activity!!)
+            adapter = PemilikProdukAdapter(mutableListOf(), activity!!, pemilikHomeViewModel)
             layoutManager = GridLayoutManager(requireActivity(),2)
         }
 
@@ -50,6 +50,10 @@ class PemilikHomeFragment :Fragment(R.layout.pemilik_fragment_home){
                 }
             }
             is PemilikHomeState.ShowToast -> toast(it.message)
+            is PemilikHomeState.SuccessDelete -> {
+                toast("berhasil dihapus")
+                pemilikHomeViewModel.getMyProduks("Bearer ${PareUtils.getToken(activity!!)}")
+            }
         }
     }
 

@@ -102,9 +102,10 @@ class UserRepository (private val api : ApiService) : UserContract{
                 when{
                     response.isSuccessful -> {
                         val b = response.body()
-                        if (b!!.status) listener.onSuccess(b.data) else listener.onFailure(Error(b.message))
+                        if (b!!.status) listener.onSuccess(b.data)
+                        else listener.onFailure(Error(b.message))
                     }
-                    else -> listener.onFailure(Error(response.message()))
+                    else -> listener.onFailure(Error("Masukkan email dan password yang benar"))
                 }
             }
         })
