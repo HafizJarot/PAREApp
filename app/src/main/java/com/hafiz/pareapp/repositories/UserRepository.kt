@@ -20,9 +20,44 @@ interface UserContract {
     fun login(email: String, passsword: String, role: Int, listener: SingleResponse<User>)
     fun updateProfil(token: String, name : String, password: String, listener: SingleResponse<User>)
     fun updatePhotoProfil(token: String, imgUrl : String, listener: SingleResponse<User>)
+    fun ambilUang(
+        token: String,
+        saldo : String,
+        namaBank : String,
+        namaRekening : String,
+        nomorRekening : String,
+        listener: SingleResponse<User>)
 }
 
 class UserRepository (private val api : ApiService) : UserContract{
+    override fun ambilUang(token: String, saldo: String, namaBank : String,
+                           namaRekening : String, nomorRekening : String, listener: SingleResponse<User>) {
+        api.ambilUang(token, saldo, namaBank, namaRekening, nomorRekening).enqueue(object : Callback<WrappedResponse<User>>{
+            override fun onFailure(call: Call<WrappedResponse<User>>, t: Throwable) {
+                listener.onFailure(Error(t.message))
+                println("failre ${t.message}")
+            }
+
+            override fun onResponse(call: Call<WrappedResponse<User>>, response: Response<WrappedResponse<User>>) {
+                when{
+                    response.isSuccessful -> {
+                        val body = response.body()
+                        if (body?.status!!){
+                            listener.onSuccess(body.data)
+                        }else{
+                            println("b ${body.message}")
+                            listener.onFailure(Error(body.message))
+                        }
+                    }
+                    !response.isSuccessful -> {
+                        println("r ${response.message()}")
+                        listener.onFailure(Error(response.message()))
+                    }
+                }
+            }
+
+        })
+    }
 
     override fun updatePhotoProfil(token: String, imgUrl: String, listener: SingleResponse<User>) {
         val file = File(imgUrl)

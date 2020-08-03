@@ -36,7 +36,7 @@ class PanoramicView : AppCompatActivity() {
         val viewOptions = VrPanoramaView.Options()
         viewOptions.inputType = VrPanoramaView.Options.TYPE_MONO
         getUriImage()?.let {
-            task = ImageLoaderTask(pano_view, viewOptions, it)
+            task = ImageLoaderTask(pano_view, photo_view, viewOptions, it)
             task!!.execute(this.assets)
             backgroundImageLoaderTask = task
             loading.visibility = View.GONE

@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 
 class ApiClient {
     companion object {
-        const val ENDPOINT = "https://papanreklame.herokuapp.com/"
+        const val ENDPOINT = "https://pare.tugas-akhir.com/"
         private var retrofit: Retrofit? = null
         private var opt = OkHttpClient.Builder().apply {
             connectTimeout(30, TimeUnit.SECONDS)
@@ -63,6 +63,17 @@ interface ApiService {
         @Field("password") password: String,
         @Field("role") role: Int
     ): Call<WrappedResponse<User>>
+
+
+    @FormUrlEncoded
+    @POST("api/user/ambil/uang")
+    fun ambilUang(
+        @Header("Authorization") token: String,
+        @Field("saldo") saldo : String,
+        @Field("nama_bank") nama_bank : String,
+        @Field("nama_rekening") nama_rekening : String,
+        @Field("nomor_rekening") nomor_rekening : String
+    ) : Call<WrappedResponse<User>>
 
     @GET("api/produk/all")
     fun getAllProduk(@Header("Authorization") token: String): Call<WrappedListResponse<Produk>>

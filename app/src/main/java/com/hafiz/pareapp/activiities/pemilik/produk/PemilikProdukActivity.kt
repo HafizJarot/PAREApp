@@ -19,7 +19,7 @@ import com.hafiz.pareapp.R
 import com.hafiz.pareapp.models.Produk
 import com.hafiz.pareapp.utils.PareUtils
 import kotlinx.android.synthetic.main.activity_pemilik_produk.*
-import kotlinx.android.synthetic.main.item_produk.*
+import kotlinx.android.synthetic.main.pemilik_item_produk.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.lang.Exception

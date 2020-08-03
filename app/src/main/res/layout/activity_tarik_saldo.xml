@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activiities.pemilik.tarik_saldo.TarikSaldoActivity">
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_weight="1"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:errorEnabled="true"
+            android:id="@+id/til_ambil_saldo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:inputType="number"
+                android:hint="Masukkan Saldo Yang Akan di Ambil"
+                android:id="@+id/ed_ambil_saldo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_weight="1"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:errorEnabled="true"
+            android:id="@+id/til_nama_bank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:hint="Masukkan Nama Bank"
+                android:id="@+id/ed_nama_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_weight="1"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:errorEnabled="true"
+            android:id="@+id/til_nomor_rekening"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:hint="Masukkan Nomor Rekening"
+                android:id="@+id/ed_nomor_rekening"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_weight="1"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:errorEnabled="true"
+            android:id="@+id/til_nama_rekening"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:hint="Masukkan Nama Rekening"
+                android:id="@+id/ed_nama_rekening"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:layout_gravity="end"
+            android:layout_weight="1"
+            android:text="ambil"
+            android:id="@+id/btn_ambil_saldo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:id="@+id/loading"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

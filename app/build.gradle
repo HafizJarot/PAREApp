@@ -83,6 +83,8 @@ dependencies {
     implementation 'com.midtrans:uikit:1.21.2-SANDBOX'
     implementation 'com.github.lespinsideg:SimplePanorama:0.3.1'
 
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
     implementation 'com.google.vr:sdk-audio:1.10.0'
     implementation 'com.google.vr:sdk-base:1.10.0'
     implementation 'com.google.vr:sdk-common:1.10.0'

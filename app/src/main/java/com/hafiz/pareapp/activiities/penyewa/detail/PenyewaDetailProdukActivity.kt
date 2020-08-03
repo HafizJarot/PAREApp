@@ -55,6 +55,7 @@ class PenyewaDetailProdukActivity : AppCompatActivity() {
         }
     }
 
+    //cek apakah hp memiliki sensor gyro atau tidak
     private fun setupSensorManager(){
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val sensorList = sensorManager.getSensorList(Sensor.TYPE_GYROSCOPE)

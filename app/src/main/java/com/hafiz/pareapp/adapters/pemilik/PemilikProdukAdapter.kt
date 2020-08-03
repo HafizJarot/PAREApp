@@ -14,14 +14,14 @@ import com.hafiz.pareapp.activiities.pemilik.produk.PemilikProdukActivity
 import com.hafiz.pareapp.fragments.pemilik.home.PemilikHomeViewModel
 import com.hafiz.pareapp.models.Produk
 import com.hafiz.pareapp.utils.PareUtils
-import kotlinx.android.synthetic.main.item_produk.view.*
+import kotlinx.android.synthetic.main.pemilik_item_produk.view.*
 
 class PemilikProdukAdapter (private var produks : MutableList<Produk>,
                             private var context : Context,
                             private var pemilikHomeViewModel: PemilikHomeViewModel)
     : RecyclerView.Adapter<PemilikProdukAdapter.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_produk, parent, false))
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.pemilik_item_produk, parent, false))
     }
 
     override fun getItemCount(): Int  = produks.size
@@ -34,7 +34,7 @@ class PemilikProdukAdapter (private var produks : MutableList<Produk>,
              with(itemView){
                  iv_produk.load(produk.foto)
                  tv_nama_pemilik.text = produk.user!!.nama_perusahaan
-                 tv_harga.text = produk.harga_sewa.toString()
+                 tv_harga.text = PareUtils.setToIDR(produk.harga_sewa!!)
                  tv_ukuran.text = "Panjang : ${produk.panjang} x Lebar : ${produk.lebar}"
                  tv_lokasi.text = produk.alamat
                  setOnClickListener {

@@ -9,12 +9,12 @@ import coil.api.load
 import com.hafiz.pareapp.MyOnClickListener
 import com.hafiz.pareapp.R
 import com.hafiz.pareapp.models.Produk
-import kotlinx.android.synthetic.main.item_produk.view.*
+import kotlinx.android.synthetic.main.pemilik_item_produk.view.*
 
 class PenyewaProdukAdapter (private var produks : MutableList<Produk>, private var myOnClickListener: MyOnClickListener)
     : RecyclerView.Adapter<PenyewaProdukAdapter.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_produk, parent, false))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.penyewa_item_produk, parent, false))
     }
 
     override fun getItemCount(): Int  = produks.size

@@ -4,6 +4,7 @@ import android.app.Application
 import com.hafiz.pareapp.activiities.login.LoginViewModel
 import com.hafiz.pareapp.activiities.pemilik.produk.PemilikProdukViewModel
 import com.hafiz.pareapp.activiities.pemilik.register.PemilikRegisterViewModel
+import com.hafiz.pareapp.activiities.pemilik.tarik_saldo.TarikSaldoViewModel
 import com.hafiz.pareapp.activiities.penyewa.order.PenyewaOrderViewModel
 import com.hafiz.pareapp.activiities.penyewa.produk.PenyewaProdukViewModel
 import com.hafiz.pareapp.activiities.penyewa.register.PenyewaRegisterViewModel
@@ -56,6 +57,7 @@ val viewModelModules = module {
     viewModel { PemilikMyOrderViewModel(get()) }
     viewModel { PemilikProdukViewModel(get()) }
     viewModel { PemilikProfileViewModel(get()) }
+    viewModel { TarikSaldoViewModel(get()) }
 
     viewModel { LoginViewModel(get()) }
     viewModel { PenyewaOrderViewModel(get(),get()) }
