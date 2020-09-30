@@ -103,4 +103,5 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="no_sensor">Nampaknya perangkat anda tidak memiliki perangkat gyroscope. Beberapa fitur di dalam aplikasi mungkin tidak akan berjalan dengan baik</string>
+    <string name="title_activity_penyewa_detail_product">PenyewaDetailProductActivity</string>
 </resources>

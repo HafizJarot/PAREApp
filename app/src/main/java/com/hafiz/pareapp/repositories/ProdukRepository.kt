@@ -20,7 +20,7 @@ interface ProdukContract {
     fun updateProduct(token: String, id: String, produk: Produk, listener: SingleResponse<Produk>)
     fun updateProductPhoto(token: String, id: String, urlFoto: String, listener: SingleResponse<Produk>)
     fun deleteProduct(token: String, id: String, listener: SingleResponse<Produk>)
-    fun fetchAllProducts(token: String, listener: ArrayResponse<Produk>)
+    fun fetchProductByCompany(token: String, id_pemilik : String, listener: ArrayResponse<Produk>)
     fun fetchProductPemilik(token: String, listener: ArrayResponse<Produk>)
 }
 
@@ -41,8 +41,8 @@ class ProdukRepository(private val api: ApiService) : ProdukContract {
         })
     }
 
-    override fun fetchAllProducts(token: String, listener: ArrayResponse<Produk>) {
-        api.fetchAllProducts(token).enqueue(object : Callback<WrappedListResponse<Produk>> {
+    override fun fetchProductByCompany(token: String,id_pemilik: String, listener: ArrayResponse<Produk>) {
+        api.fetchProductByCompany(token, id_pemilik.toInt()).enqueue(object : Callback<WrappedListResponse<Produk>> {
             override fun onFailure(call: Call<WrappedListResponse<Produk>>, t: Throwable) {
                 listener.onFailure(Error(t.message))
             }
@@ -86,11 +86,10 @@ class ProdukRepository(private val api: ApiService) : ProdukContract {
     }
 
     override fun updateProduct(token: String, id: String, produk: Produk, listener: SingleResponse<Produk>) {
-        produk.pemilik = null
+        //produk.pemilik = null
         val g = GsonBuilder().create()
         val json = g.toJson(produk)
         val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
-        println(json)
         api.updateProduk(token, id.toInt(), body)
             .enqueue(object : Callback<WrappedResponse<Produk>> {
                 override fun onFailure(call: Call<WrappedResponse<Produk>>, t: Throwable) {

@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.penyewa.detail_company.PenyewaDetailCompanyActivity">
+    tools:context="com.hafiz.pareapp.ui.penyewa.detail_product.PenyewaDetailProductActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

@@ -7,12 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
 import com.hafiz.pareapp.R
 import com.hafiz.pareapp.models.Pemilik
-import com.hafiz.pareapp.models.Produk
-import com.hafiz.pareapp.ui.penyewa.detail.PenyewaDetailProdukActivity
-import com.hafiz.pareapp.utils.PareUtils
+import com.hafiz.pareapp.ui.penyewa.detail_company.PenyewaDetailCompanyActivity
 import kotlinx.android.synthetic.main.penyewa_item_home.view.*
 
 class PenyewaHomeAdapter (private var pemiliks : MutableList<Pemilik>, private var context: Context)
@@ -32,6 +29,11 @@ class PenyewaHomeAdapter (private var pemiliks : MutableList<Pemilik>, private v
                 txt_nama_perusahaan.text = pemilik.nama_perusahaan
                 txt_lokasi.text = pemilik.alamat
                 txt_no_izin.text = pemilik.no_izin
+                setOnClickListener {
+                    context.startActivity(Intent(context, PenyewaDetailCompanyActivity::class.java).apply {
+                        putExtra("COMPANY", pemilik)
+                    })
+                }
             }
         }
     }

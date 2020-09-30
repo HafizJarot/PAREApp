@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.hafiz.pareapp.R
 import com.hafiz.pareapp.models.Pemilik
 import com.hafiz.pareapp.models.Produk

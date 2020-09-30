@@ -17,8 +17,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name="com.hafiz.pareapp.ui.pemilik.tarik_saldo.TarikSaldoActivity"></activity>
-        <activity android:name="com.hafiz.pareapp.ui.penyewa.panoramic_view.PanoramicView"></activity>
+        <activity
+            android:name=".ui.penyewa.detail_product.PenyewaDetailProductActivity"
+            android:label="@string/title_activity_penyewa_detail_product"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.pemilik.tarik_saldo.TarikSaldoActivity" />
+        <activity android:name=".ui.penyewa.panoramic_view.PanoramicView" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,21 +30,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.hafiz.pareapp.ui.penyewa.produk.PenyewaProdukActivity" />
-        <activity android:name="com.hafiz.pareapp.ui.penyewa.order.PenyewaOrderActivity" />
-        <activity android:name="com.hafiz.pareapp.ui.pemilik.produk.PemilikProdukActivity" />
-        <activity android:name="com.hafiz.pareapp.ui.penyewa.register.PenyewaRegisterActivity" />
-        <activity android:name="com.hafiz.pareapp.ui.pemilik.register.PemilikRegisterActivity" />
-        <activity android:name="com.hafiz.pareapp.ui.penyewa.update_profile.UpdateProfileActivity" />
+        <activity android:name=".ui.penyewa.produk.PenyewaProdukActivity" />
+        <activity android:name=".ui.penyewa.order.PenyewaOrderActivity" />
+        <activity android:name=".ui.pemilik.produk.PemilikProdukActivity" />
+        <activity android:name=".ui.penyewa.register.PenyewaRegisterActivity" />
+        <activity android:name=".ui.pemilik.register.PemilikRegisterActivity" />
+        <activity android:name=".ui.penyewa.update_profile.UpdateProfileActivity" />
         <activity
-            android:name="com.hafiz.pareapp.ui.penyewa.detail.PenyewaDetailProdukActivity"
+            android:name=".ui.penyewa.detail_company.PenyewaDetailCompanyActivity"
             android:label="@string/title_activity_penyewa_detail_produk"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.hafiz.pareapp.ui.login.LoginActivity" />
+        <activity android:name=".ui.login.LoginActivity" />
         <activity
-            android:name="com.hafiz.pareapp.ui.penyewa.main.PenyewaMainActivity"
+            android:name=".ui.penyewa.main.PenyewaMainActivity"
             android:label="@string/app_name" />
-        <activity android:name="com.hafiz.pareapp.ui.pemilik.main.PemilikMainActivity" />
+        <activity android:name=".ui.pemilik.main.PemilikMainActivity" />
 
         <service android:name=".utils.fcm.MyFirebaseMessagingService">
             <intent-filter>

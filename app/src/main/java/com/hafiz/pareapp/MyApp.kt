@@ -1,6 +1,7 @@
 package com.hafiz.pareapp
 
 import android.app.Application
+import com.hafiz.pareapp.repositories.*
 import com.hafiz.pareapp.ui.login.LoginViewModel
 import com.hafiz.pareapp.ui.pemilik.produk.PemilikProdukViewModel
 import com.hafiz.pareapp.ui.pemilik.register.PemilikRegisterViewModel
@@ -10,13 +11,11 @@ import com.hafiz.pareapp.ui.penyewa.register.PenyewaRegisterViewModel
 import com.hafiz.pareapp.ui.pemilik.main.home.PemilikHomeViewModel
 import com.hafiz.pareapp.ui.pemilik.main.order.PemilikMyOrderViewModel
 import com.hafiz.pareapp.ui.pemilik.main.profile.PemilikProfileViewModel
+import com.hafiz.pareapp.ui.penyewa.detail_company.PenyewaProductViewModel
+import com.hafiz.pareapp.ui.penyewa.detail_product.PenyewaDetailProdukViewModel
 import com.hafiz.pareapp.ui.penyewa.main.home.PenyewaHomeViewModel
 import com.hafiz.pareapp.ui.penyewa.main.order.PenyewaMyOrderViewModel
 import com.hafiz.pareapp.ui.penyewa.main.profile.PenyewaProfileViewModel
-import com.hafiz.pareapp.repositories.FirebaseRepository
-import com.hafiz.pareapp.repositories.OrderRepository
-import com.hafiz.pareapp.repositories.ProdukRepository
-import com.hafiz.pareapp.repositories.UserRepository
 import com.hafiz.pareapp.webservices.ApiClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -45,6 +44,7 @@ val repositoryModules = module {
     factory { ProdukRepository(get()) }
     factory { UserRepository(get()) }
     factory { OrderRepository(get()) }
+    factory { CompanyRepository(get()) }
 }
 
 val viewModelModules = module {
@@ -64,4 +64,6 @@ val viewModelModules = module {
     viewModel { PenyewaHomeViewModel(get()) }
     viewModel { PenyewaMyOrderViewModel(get()) }
     viewModel { PenyewaProfileViewModel(get()) }
+    viewModel { PenyewaProductViewModel(get()) }
+    viewModel { PenyewaDetailProdukViewModel(get()) }
 }

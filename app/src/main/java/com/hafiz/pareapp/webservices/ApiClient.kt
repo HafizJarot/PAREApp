@@ -83,8 +83,11 @@ interface ApiService {
         @Header("Authorization") token: String
     ) : Call<WrappedListResponse<Pemilik>>
 
-    @GET("api/produk/all")
-    fun fetchAllProducts(@Header("Authorization") token: String): Call<WrappedListResponse<Produk>>
+    @GET("api/produk/{id_pemilik}")
+    fun fetchProductByCompany(
+        @Header("Authorization") token: String,
+        @Path("id_pemilik") id_pemilik : Int
+    ): Call<WrappedListResponse<Produk>>
 
     @GET("api/produk")
     fun fetchProductPemilik(@Header("Authorization") token: String): Call<WrappedListResponse<Produk>>

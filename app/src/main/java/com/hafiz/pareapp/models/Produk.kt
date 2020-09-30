@@ -15,6 +15,6 @@ data class Produk(
     @SerializedName("keterangan") var keterangan: String? = null,
     @SerializedName("harga_sewa") var harga_sewa: Int? = null,
     @SerializedName("alamat") var alamat: String? = null,
-    @SerializedName("status") var status: Boolean = false,
-    @SerializedName("pemilik") var pemilik: Pemilik? = null
+    @SerializedName("status") var status: Boolean = false
+    //@SerializedName("pemilik") var pemilik: Pemilik? = null
 ) : Parcelable

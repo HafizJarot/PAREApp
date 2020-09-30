@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.penyewa.detail.PenyewaDetailProdukActivity">
+    tools:context=".ui.penyewa.detail_company.PenyewaDetailCompanyActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -40,7 +40,7 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/penyewa_content_detail_produk" />
+    <include layout="@layout/penyewa_content_detail_company" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

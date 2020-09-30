@@ -1,9 +1,12 @@
 package com.hafiz.pareapp.utils
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
+import javax.xml.datatype.DatatypeConstants.MONTHS
 
 object PareUtils {
     fun getToken(c : Context) : String? {
@@ -45,5 +48,6 @@ object PareUtils {
 
     fun isValidEmail(email : String) : Boolean = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     fun isValidPassword(password : String) = password.length >= 8
+
 
 }
