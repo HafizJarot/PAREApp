@@ -6,7 +6,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activiities.pemilik.main.PemilikMainActivity">
+    tools:context=".ui.pemilik.main.PemilikMainActivity">
 
     <FrameLayout
         android:id="@+id/screen_container"

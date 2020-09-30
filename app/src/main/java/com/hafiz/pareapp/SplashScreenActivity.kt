@@ -7,7 +7,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.hafiz.pareapp.activiities.login.LoginActivity
+import com.hafiz.pareapp.ui.login.LoginActivity
 
 class SplashScreenActivity : AppCompatActivity() {
 

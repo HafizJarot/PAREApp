@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 
 class ApiClient {
     companion object {
-        const val ENDPOINT = "https://pare.tugas-akhir.com/"
+        const val ENDPOINT = "https://papanreklame.herokuapp.com/"
         private var retrofit: Retrofit? = null
         private var opt = OkHttpClient.Builder().apply {
             connectTimeout(30, TimeUnit.SECONDS)
@@ -61,8 +61,11 @@ interface ApiService {
     fun login(
         @Field("email") email: String,
         @Field("password") password: String,
-        @Field("role") role: Int
+        @Field("fcm_token") fcm: String
     ): Call<WrappedResponse<User>>
+
+    @POST("api/user/login")
+    fun login(@Body body: RequestBody): Call<WrappedResponse<User>>
 
 
     @FormUrlEncoded
@@ -75,8 +78,16 @@ interface ApiService {
         @Field("nomor_rekening") nomor_rekening : String
     ) : Call<WrappedResponse<User>>
 
+    @GET("api/pemilik")
+    fun fetchCompanies(
+        @Header("Authorization") token: String
+    ) : Call<WrappedListResponse<Pemilik>>
+
     @GET("api/produk/all")
-    fun getAllProduk(@Header("Authorization") token: String): Call<WrappedListResponse<Produk>>
+    fun fetchAllProducts(@Header("Authorization") token: String): Call<WrappedListResponse<Produk>>
+
+    @GET("api/produk")
+    fun fetchProductPemilik(@Header("Authorization") token: String): Call<WrappedListResponse<Produk>>
 
     @FormUrlEncoded
     @POST("api/produk/search")
@@ -96,9 +107,6 @@ interface ApiService {
         @Field("name") name : String,
         @Field("password") pass : String
     ) : Call<WrappedResponse<User>>
-
-    @GET("api/produk")
-    fun getProdukPemilik(@Header("Authorization") token: String): Call<WrappedListResponse<Produk>>
 
 
     @Multipart

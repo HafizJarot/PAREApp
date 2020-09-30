@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activiities.penyewa.panoramic_view.PanoramicView">
+    tools:context=".ui.penyewa.panoramic_view.PanoramicView">
 
     <com.google.vr.sdk.widgets.pano.VrPanoramaView
         android:id="@+id/pano_view"

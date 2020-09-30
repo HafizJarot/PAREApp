@@ -1,10 +1,14 @@
 package com.hafiz.pareapp.repositories
 
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.annotations.SerializedName
 import com.hafiz.pareapp.models.RegisterPemilik
 import com.hafiz.pareapp.models.RegisterPenyewa
 import com.hafiz.pareapp.models.User
+import com.hafiz.pareapp.utils.PareUtils
 import com.hafiz.pareapp.utils.SingleResponse
+import com.hafiz.pareapp.webservices.ApiClient
 import com.hafiz.pareapp.webservices.ApiService
 import com.hafiz.pareapp.webservices.WrappedResponse
 import okhttp3.MediaType
@@ -17,19 +21,13 @@ import java.io.File
 
 interface UserContract {
     fun profile(token: String, listener : SingleResponse<User>)
-    fun login(email: String, passsword: String, role: Int, listener: SingleResponse<User>)
+    fun login(email: String, password: String, fcmToken: String, listener: SingleResponse<User>)
     fun updateProfil(token: String, name : String, password: String, listener: SingleResponse<User>)
     fun updatePhotoProfil(token: String, imgUrl : String, listener: SingleResponse<User>)
-    fun ambilUang(
-        token: String,
-        saldo : String,
-        namaBank : String,
-        namaRekening : String,
-        nomorRekening : String,
-        listener: SingleResponse<User>)
+    fun ambilUang(token: String, saldo : String, namaBank : String, namaRekening : String, nomorRekening : String, listener: SingleResponse<User>)
 }
 
-class UserRepository (private val api : ApiService) : UserContract{
+class UserRepository (private val api : ApiService) : UserContract {
     override fun ambilUang(token: String, saldo: String, namaBank : String,
                            namaRekening : String, nomorRekening : String, listener: SingleResponse<User>) {
         api.ambilUang(token, saldo, namaBank, namaRekening, nomorRekening).enqueue(object : Callback<WrappedResponse<User>>{
@@ -45,12 +43,10 @@ class UserRepository (private val api : ApiService) : UserContract{
                         if (body?.status!!){
                             listener.onSuccess(body.data)
                         }else{
-                            println("b ${body.message}")
                             listener.onFailure(Error(body.message))
                         }
                     }
                     !response.isSuccessful -> {
-                        println("r ${response.message()}")
                         listener.onFailure(Error(response.message()))
                     }
                 }
@@ -124,49 +120,24 @@ class UserRepository (private val api : ApiService) : UserContract{
                     !response.isSuccessful -> listener.onFailure(Error(response.message()))
                 }
             }
-
         })
     }
 
-
-    override fun login(email: String, passsword: String, role: Int, listener: SingleResponse<User>) {
-        api.login(email, passsword, role).enqueue(object : Callback<WrappedResponse<User>> {
+    override fun login(email: String, password: String, fcmToken: String, listener: SingleResponse<User>) {
+        api.login(email, password, fcmToken).enqueue(object : Callback<WrappedResponse<User>> {
             override fun onFailure(call: Call<WrappedResponse<User>>, t: Throwable) = listener.onFailure(Error(t.message))
 
             override fun onResponse(call: Call<WrappedResponse<User>>, response: Response<WrappedResponse<User>>) {
                 when{
                     response.isSuccessful -> {
-                        val b = response.body()
-                        if (b!!.status) listener.onSuccess(b.data)
-                        else listener.onFailure(Error(b.message))
+                        val body = response.body()
+                        if (body?.status!!) listener.onSuccess(body.data)
+                        else listener.onFailure(Error(body.message))
                     }
-                    else -> listener.onFailure(Error("Masukkan email dan password yang benar"))
+                    //else -> listener.onFailure(Error("Masukkan email dan password yang benar"))
+                    !response.isSuccessful -> listener.onFailure(Error(response.message()))
                 }
             }
-        })
-    }
-
-
-    fun profile(token : String, result: (User?, Error?) -> Unit){
-        api.profile(token).enqueue(object : Callback<WrappedResponse<User>>{
-            override fun onFailure(call: Call<WrappedResponse<User>>, t: Throwable) {
-                result(null, Error(t.message))
-            }
-
-            override fun onResponse(call: Call<WrappedResponse<User>>, response: Response<WrappedResponse<User>>) {
-                if (response.isSuccessful){
-                    val body = response.body()
-                    if (body?.status!!){
-                        val data = body.data
-                        result(data, null)
-                    }else{
-                        result(null, Error(body.message))
-                    }
-                }else{
-                    result(null, Error(response.message()))
-                }
-            }
-
         })
     }
 

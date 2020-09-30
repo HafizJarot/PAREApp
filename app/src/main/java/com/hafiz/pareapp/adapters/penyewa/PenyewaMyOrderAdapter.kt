@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.hafiz.pareapp.R
 import com.hafiz.pareapp.models.Order
+import com.hafiz.pareapp.utils.PareUtils
 import kotlinx.android.synthetic.main.penyewa_item_my_order.view.*
 import kotlinx.android.synthetic.main.penyewa_item_my_produk.view.*
 
@@ -24,8 +25,8 @@ class PenyewaMyOrderAdapter (private var orders : MutableList<Order>, private va
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         fun bind(order: Order, context: Context){
             with(itemView){
-                txt_nama_produk.text = order.pemilik.nama_perusahaan
-                txt_harga.text = order.produk.harga_sewa.toString()
+                //txt_nama_produk.text = order.pemilik.nama_perusahaan
+                txt_harga.text = PareUtils.setToIDR(order.produk.harga_sewa!!)
                 txt_alamat.text = order.produk.alamat
                 img_produk.load(order.produk.foto)
             }

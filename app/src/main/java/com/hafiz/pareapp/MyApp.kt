@@ -1,19 +1,18 @@
 package com.hafiz.pareapp
 
 import android.app.Application
-import com.hafiz.pareapp.activiities.login.LoginViewModel
-import com.hafiz.pareapp.activiities.pemilik.produk.PemilikProdukViewModel
-import com.hafiz.pareapp.activiities.pemilik.register.PemilikRegisterViewModel
-import com.hafiz.pareapp.activiities.pemilik.tarik_saldo.TarikSaldoViewModel
-import com.hafiz.pareapp.activiities.penyewa.order.PenyewaOrderViewModel
-import com.hafiz.pareapp.activiities.penyewa.produk.PenyewaProdukViewModel
-import com.hafiz.pareapp.activiities.penyewa.register.PenyewaRegisterViewModel
-import com.hafiz.pareapp.fragments.pemilik.home.PemilikHomeViewModel
-import com.hafiz.pareapp.fragments.pemilik.order.PemilikMyOrderViewModel
-import com.hafiz.pareapp.fragments.pemilik.profile.PemilikProfileViewModel
-import com.hafiz.pareapp.fragments.penyewa.home.PenyewaHomeViewModel
-import com.hafiz.pareapp.fragments.penyewa.order.PenyewaMyOrderViewModel
-import com.hafiz.pareapp.fragments.penyewa.profile.PenyewaProfileViewModel
+import com.hafiz.pareapp.ui.login.LoginViewModel
+import com.hafiz.pareapp.ui.pemilik.produk.PemilikProdukViewModel
+import com.hafiz.pareapp.ui.pemilik.register.PemilikRegisterViewModel
+import com.hafiz.pareapp.ui.pemilik.tarik_saldo.TarikSaldoViewModel
+import com.hafiz.pareapp.ui.penyewa.order.PenyewaOrderViewModel
+import com.hafiz.pareapp.ui.penyewa.register.PenyewaRegisterViewModel
+import com.hafiz.pareapp.ui.pemilik.main.home.PemilikHomeViewModel
+import com.hafiz.pareapp.ui.pemilik.main.order.PemilikMyOrderViewModel
+import com.hafiz.pareapp.ui.pemilik.main.profile.PemilikProfileViewModel
+import com.hafiz.pareapp.ui.penyewa.main.home.PenyewaHomeViewModel
+import com.hafiz.pareapp.ui.penyewa.main.order.PenyewaMyOrderViewModel
+import com.hafiz.pareapp.ui.penyewa.main.profile.PenyewaProfileViewModel
 import com.hafiz.pareapp.repositories.FirebaseRepository
 import com.hafiz.pareapp.repositories.OrderRepository
 import com.hafiz.pareapp.repositories.ProdukRepository
@@ -59,9 +58,8 @@ val viewModelModules = module {
     viewModel { PemilikProfileViewModel(get()) }
     viewModel { TarikSaldoViewModel(get()) }
 
-    viewModel { LoginViewModel(get()) }
+    viewModel { LoginViewModel(get(), get()) }
     viewModel { PenyewaOrderViewModel(get(),get()) }
-    viewModel { PenyewaProdukViewModel(get()) }
 
     viewModel { PenyewaHomeViewModel(get()) }
     viewModel { PenyewaMyOrderViewModel(get()) }
