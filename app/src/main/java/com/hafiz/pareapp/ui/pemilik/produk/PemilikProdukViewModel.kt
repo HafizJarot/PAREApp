@@ -2,15 +2,22 @@ package com.hafiz.pareapp.ui.pemilik.produk
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.hafiz.pareapp.models.Kecamatan
 import com.hafiz.pareapp.models.Produk
+import com.hafiz.pareapp.repositories.KecamatanRepository
 import com.hafiz.pareapp.repositories.ProdukRepository
+import com.hafiz.pareapp.utils.ArrayResponse
 import com.hafiz.pareapp.utils.SingleLiveEvent
 import com.hafiz.pareapp.utils.SingleResponse
 import java.lang.Error
 
-class PemilikProdukViewModel (private val produkRepository: ProdukRepository) : ViewModel(){
+class PemilikProdukViewModel (private val produkRepository: ProdukRepository,
+                              private val kecamatanRepository: KecamatanRepository) : ViewModel(){
     private val state : SingleLiveEvent<PemilikProdukState> = SingleLiveEvent()
     private val product = MutableLiveData<Produk>(Produk())
+    private val kecamatan = MutableLiveData<List<Kecamatan>>()
 
     private fun toast(message: String) { state.value = PemilikProdukState.ShowToast(message) }
     private fun setLoading() { state.value = PemilikProdukState.IsLoading(true) }
@@ -58,15 +65,19 @@ class PemilikProdukViewModel (private val produkRepository: ProdukRepository) : 
         return true
     }
 
-    fun tambahproduk(token: String, produk: Produk, urlFoto: String){
+    fun createProduct(token: String, produk: Produk, urlFoto: String){
         setLoading()
-        produkRepository.tambahProduk(token, produk, urlFoto){resultBool, error->
-            hideLoading()
-            error?.let { it.message?.let { message-> toast(message) }}
-            if (resultBool){
-                success()
+        produkRepository.createProduct(token, produk, urlFoto , object : SingleResponse<Produk>{
+            override fun onSuccess(data: Produk?) {
+                hideLoading()
+                data?.let { success() }
             }
-        }
+
+            override fun onFailure(err: Error) {
+                hideLoading()
+                toast(err.message.toString())
+            }
+        })
     }
 
     fun setCurrentProduct(p: Produk) = product.postValue(p)
@@ -120,7 +131,24 @@ class PemilikProdukViewModel (private val produkRepository: ProdukRepository) : 
         })
     }
 
+    fun fetchKecamatan(){
+        setLoading()
+        kecamatanRepository.fetchKecamaatan(object : ArrayResponse<Kecamatan>{
+            override fun onSuccess(datas: List<Kecamatan>?) {
+                hideLoading()
+                datas?.let { kecamatan.postValue(it) }
+            }
+
+            override fun onFailure(err: Error) {
+                hideLoading()
+                toast(err.message.toString())
+            }
+
+        })
+    }
+
     fun listenToCurrentProduct() = product
+    fun listenToKecamatan() = kecamatan
     fun listenToState() = state
 }
 sealed class PemilikProdukState{

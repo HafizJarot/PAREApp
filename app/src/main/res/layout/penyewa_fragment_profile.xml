@@ -108,6 +108,7 @@
                     android:background="@color/grey"/>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -140,62 +141,10 @@
         android:id="@+id/btn_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>
-
-
-    <!--<androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
-        android:paddingTop="15dp"
-        android:paddingRight="15dp"
-        android:paddingLeft="15dp"
-        app:cardCornerRadius="10dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_gravity="center_horizontal"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:src="@drawable/profile"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Profil Pemilik"
-                android:textStyle="bold"
-                android:layout_marginTop="60sp"
-                android:layout_gravity="center_horizontal"
-                android:textSize="30sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Full stack developer, Android UI"
-                android:textStyle="bold"
-                android:layout_marginTop="60dp"
-                android:layout_gravity="center_horizontal"
-                android:textSize="20sp">
-
-            </TextView>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <FrameLayout
-        android:background="@drawable/grad_bg"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_margin="10dp"
-        android:layout_alignParentBottom="true"
-        android:text="logout"
-        android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>-->

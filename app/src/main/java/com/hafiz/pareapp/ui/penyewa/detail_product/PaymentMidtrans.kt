@@ -1,10 +1,11 @@
-package com.hafiz.pareapp.ui.penyewa.order
+package com.hafiz.pareapp.ui.penyewa.detail_product
 
 import android.content.Context
 import android.view.Gravity
 import android.widget.Toast
 import com.hafiz.pareapp.BuildConfig
 import com.hafiz.pareapp.models.CreateOrder
+import com.hafiz.pareapp.ui.penyewa.order.PenyewaOrderViewModel
 import com.hafiz.pareapp.webservices.ApiClient
 import com.midtrans.sdk.corekit.core.MidtransSDK
 import com.midtrans.sdk.corekit.core.TransactionRequest
@@ -14,7 +15,7 @@ import com.midtrans.sdk.uikit.SdkUIFlowBuilder
 import com.midtrans.sdk.corekit.models.ItemDetails
 
 class PaymentMidtrans {
-    fun initPayment(context: Context, penyewaOrderViewModel: PenyewaOrderViewModel,
+    fun initPayment(context: Context, penyewaDetailProdukViewModel: PenyewaDetailProdukViewModel,
                     token : String, createOrder: CreateOrder){
         SdkUIFlowBuilder.init().apply {
             setClientKey(BuildConfig.CLIENT_KEY)
@@ -27,19 +28,19 @@ class PaymentMidtrans {
                         when(result.status){
                             TransactionResult.STATUS_FAILED -> {
                                 toast(context,"transaction is failed")
-                                penyewaOrderViewModel.orderStore(token, createOrder)
+                                //penyewaOrderViewModel.orderStore(token, createOrder)
                             }
                             TransactionResult.STATUS_PENDING -> {
                                 toast(context,"transaction is pending")
-                                penyewaOrderViewModel.orderStore(token, createOrder)
+                                penyewaDetailProdukViewModel.orderStore(token, createOrder)
                             }
                             TransactionResult.STATUS_SUCCESS -> {
                                 toast(context,"transaction is success")
-                                penyewaOrderViewModel.orderStore(token, createOrder)
+                                //penyewaOrderViewModel.orderStore(token, createOrder)
                             }
                             TransactionResult.STATUS_INVALID -> {
                                 toast(context,"transaction is invalid")
-                                penyewaOrderViewModel.orderStore(token, createOrder)
+                                //penyewaOrderViewModel.orderStore(token, createOrder)
                             }
                             else -> toast(context,"transaction is invalid")
                         }

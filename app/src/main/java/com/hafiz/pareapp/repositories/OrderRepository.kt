@@ -3,6 +3,7 @@ package com.hafiz.pareapp.repositories
 import com.google.gson.GsonBuilder
 import com.hafiz.pareapp.models.CreateOrder
 import com.hafiz.pareapp.models.Order
+import com.hafiz.pareapp.utils.SingleResponse
 import com.hafiz.pareapp.webservices.ApiService
 import com.hafiz.pareapp.webservices.WrappedListResponse
 import com.hafiz.pareapp.webservices.WrappedResponse
@@ -13,16 +14,38 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.Error
 
-class OrderRepository (private val api : ApiService){
+interface OrderContract{
+    fun createOrder(token: String, createOrder: CreateOrder, listener : SingleResponse<CreateOrder>)
+}
+
+class OrderRepository (private val api : ApiService) : OrderContract{
+    override fun createOrder(token: String, createOrder: CreateOrder, listener: SingleResponse<CreateOrder>) {
+        val g = GsonBuilder().create()
+        val json = g.toJson(createOrder)
+        val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
+        api.createOrder(token, body).enqueue(object : Callback<WrappedResponse<CreateOrder>>{
+            override fun onFailure(call: Call<WrappedResponse<CreateOrder>>, t: Throwable) {
+                listener.onFailure(Error(t.message))
+            }
+
+            override fun onResponse(call: Call<WrappedResponse<CreateOrder>>, response: Response<WrappedResponse<CreateOrder>>) {
+                when{
+                    response.isSuccessful -> {
+                        val b = response.body()
+                        if (b?.status!!) listener.onSuccess(b.data) else listener.onFailure(Error(b.message))
+                    }
+                    else -> listener.onFailure(Error(response.message()))
+                }
+            }
+        })
+    }
 
     fun orderStore(token : String, createOrder: CreateOrder, result : (Boolean, Error?)->Unit){
         val g = GsonBuilder().create()
         val json = g.toJson(createOrder)
-        println(json)
         val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
         api.createOrder(token, body).enqueue(object : Callback<WrappedResponse<CreateOrder>>{
             override fun onFailure(call: Call<WrappedResponse<CreateOrder>>, t: Throwable) {
-                println(t.message)
                 result(false, Error(t.message))
             }
 
@@ -30,10 +53,8 @@ class OrderRepository (private val api : ApiService){
                 if (response.isSuccessful){
                     val body  = response.body()
                     if (body?.status!!){
-                        println(body.data)
                         result(true, null)
                     }else{
-                        println(body.message)
                         result(false, Error(body.message))
                     }
                 }else{

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hafiz.pareapp.models.Produk
 import com.hafiz.pareapp.repositories.ProdukRepository
+import com.hafiz.pareapp.utils.ArrayResponse
 import com.hafiz.pareapp.utils.SingleLiveEvent
 import com.hafiz.pareapp.utils.SingleResponse
 import java.lang.Error
@@ -18,14 +19,20 @@ class PemilikHomeViewModel (private val produkRepository: ProdukRepository) : Vi
     private fun success() { state.value = PemilikHomeState.Success }
     private fun successDelete() { state.value = PemilikHomeState.SuccessDelete }
 
-//    fun getMyProduks(token : String){
-//        setLoading()
-//        produkRepository.fetchProductPemilik(token){listProduk, error->
-//            hideLoading()
-//            error?.let { it.message?.let { message-> toast(message) }}
-//            listProduk?.let { produks.postValue(it) }
-//        }
-//    }
+    fun getMyProduks(token : String){
+        setLoading()
+        produkRepository.fetchProductPemilik(token, object : ArrayResponse<Produk>{
+            override fun onSuccess(datas: List<Produk>?) {
+                hideLoading()
+                datas?.let { produks.postValue(it) }
+            }
+
+            override fun onFailure(err: Error) {
+                hideLoading()
+                toast(err.message.toString())
+            }
+        })
+    }
 
 
     fun deleteProduk(token: String, id : String){

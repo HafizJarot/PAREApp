@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.hafiz.pareapp.models.User
 import com.hafiz.pareapp.repositories.UserRepository
 import com.hafiz.pareapp.utils.SingleLiveEvent
+import com.hafiz.pareapp.utils.SingleResponse
+import java.lang.Error
 
 class PenyewaProfileViewModel (private val userRepository: UserRepository) : ViewModel(){
     private val currentUser = MutableLiveData<User>()
@@ -13,14 +15,23 @@ class PenyewaProfileViewModel (private val userRepository: UserRepository) : Vie
     private fun hideLoading(){ state.value = PenyewaProfileState.Loading(false) }
     private fun toast(message: String){ state.value = PenyewaProfileState.ShowToast(message) }
 
-//    fun currentUser(token : String){
-//        setLoading()
-//        userRepository.profile(token){user, error ->
-//            hideLoading()
-//            error?.let { it.message?.let { message-> toast(message) } }
-//            user?.let { currentUser.postValue(it) }
-//        }
-//    }
+    fun currentUser(token : String){
+        setLoading()
+        userRepository.profile(token , object : SingleResponse<User>{
+            override fun onSuccess(data: User?) {
+                hideLoading()
+                data?.let {
+                    println(it)
+                    currentUser.postValue(it)
+                }
+            }
+
+            override fun onFailure(err: Error) {
+                hideLoading()
+                toast(err.message.toString())
+            }
+        })
+    }
 
 
 

@@ -10,14 +10,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import coil.api.load
-
 import com.fxn.pix.Pix
 import com.hafiz.pareapp.R
+import com.hafiz.pareapp.models.Kecamatan
 import com.hafiz.pareapp.models.Produk
 import com.hafiz.pareapp.utils.PareUtils
+import com.hafiz.pareapp.utils.extensions.showToast
 import kotlinx.android.synthetic.main.pemilik_activity_produk.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
@@ -29,17 +29,21 @@ class PemilikProdukActivity : AppCompatActivity() {
 
     private val pemilikProdukViewModel : PemilikProdukViewModel by viewModel()
     private lateinit var sisi : String
+    private lateinit var type : String
     private val IMAGE_REQ_CODE = 101
     private var imageUrl = ""
+    private var kcmtn : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pemilik_activity_produk)
         isUpdate()
+        if (isInsert()) fetchKecamatan()
         observe()
         chooseImage()
         et_masaberdiri.isFocusableInTouchMode = false
         setSpinner()
+        setSpinnerType()
         setDate()
         fill()
     }
@@ -47,10 +51,32 @@ class PemilikProdukActivity : AppCompatActivity() {
     private fun observe(){
         observeState()
         observeCurrentProduct()
+        if (isInsert()) observeKecamatan()
     }
 
     private fun observeState() = pemilikProdukViewModel.listenToState().observer(this, Observer { handleUI(it) })
     private fun observeCurrentProduct() = pemilikProdukViewModel.listenToCurrentProduct().observe(this, Observer { handleCurrentProduct(it) })
+    private fun observeKecamatan() = pemilikProdukViewModel.listenToKecamatan().observe(this, Observer { handleKecamatan(it) })
+
+    private fun handleKecamatan(list: List<Kecamatan>?) {
+        list?.let { kcm ->
+            val kecamatan = kcm.distinctBy { k -> k.kecamatan }
+            val kec : MutableList<String> = mutableListOf()
+            kecamatan.map { kec.add(it.kecamatan!!) }
+            val adapter = ArrayAdapter(this@PemilikProdukActivity, android.R.layout.simple_spinner_item, kec)
+                .apply {
+                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                }
+            spinner_kecamatan.adapter = adapter
+            spinner_kecamatan.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    kcmtn = kcm.find { k -> k.kecamatan == kec[position] }!!.id
+                }
+            }
+        }
+    }
 
     private fun setSpinner(){
         val itemSisi = arrayOf("1", "2")
@@ -61,6 +87,18 @@ class PemilikProdukActivity : AppCompatActivity() {
         spinner_sisi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { sisi = itemSisi[position] }
+        }
+    }
+
+    private fun setSpinnerType(){
+        val item = arrayOf("Perusahaan", "Individu")
+        val adapter = ArrayAdapter(this@PemilikProdukActivity, android.R.layout.simple_spinner_item, item).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+        spinner_type.adapter = adapter
+        spinner_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { type = item[position] }
         }
     }
 
@@ -75,7 +113,6 @@ class PemilikProdukActivity : AppCompatActivity() {
         setMasaBerdiriErr(null)
         setPanjangErr(null)
         setHargaSewaErr(null)
-        //setSisiErr(null)
     }
 
     private fun validate(it: PemilikProdukState.Validate){
@@ -90,7 +127,7 @@ class PemilikProdukActivity : AppCompatActivity() {
 
     private fun handleUI(it : PemilikProdukState){
         when(it){
-            is PemilikProdukState.ShowToast -> toast(it.message)
+            is PemilikProdukState.ShowToast -> showToast(it.message)
             is PemilikProdukState.IsLoading -> isLoading(it.state)
             is PemilikProdukState.Success -> finish()
             is PemilikProdukState.SuccessUpdate -> finish()
@@ -137,9 +174,7 @@ class PemilikProdukActivity : AppCompatActivity() {
         }
     }
 
-    private fun onPhotoReturned(imgPath : String){
-        pemilikProdukViewModel.setCurrentProductImage(imgPath)
-    }
+    private fun onPhotoReturned(imgPath : String) = pemilikProdukViewModel.setCurrentProductImage(imgPath)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -160,13 +195,15 @@ class PemilikProdukActivity : AppCompatActivity() {
                 val panjang = et_panjang.text.toString().trim()
                 val lebar = et_lebar.text.toString().trim()
                 val masa_berdiri = et_masaberdiri.text.toString().trim()
+                
                 val keterangan = et_keterangan.text.toString().trim()
                 val harga_sewa = et_hargasewa.text.toString().trim()
                 val alamat = et_alamat.text.toString().trim()
                 val sisi = sisi
                 val foto = pemilikProdukViewModel.listenToCurrentProduct().value!!.foto.toString()
-                if (pemilikProdukViewModel.validate(masa_berdiri, keterangan, harga_sewa,panjang, lebar, alamat, foto, sisi)){
+                if (pemilikProdukViewModel.validate(panjang, lebar, masa_berdiri, keterangan, harga_sewa, alamat, foto, sisi)){
                     val tempProduct = pemilikProdukViewModel.listenToCurrentProduct().value!!
+                    tempProduct.id_kecamatan = kcmtn
                     tempProduct.sisi = sisi.toInt()
                     tempProduct.panjang = panjang.toInt()
                     tempProduct.lebar = lebar.toInt()
@@ -174,9 +211,10 @@ class PemilikProdukActivity : AppCompatActivity() {
                     tempProduct.keterangan = keterangan
                     tempProduct.harga_sewa = harga_sewa.toInt()
                     tempProduct.alamat = alamat
-                    pemilikProdukViewModel.tambahproduk(token, tempProduct, foto)
+                    tempProduct.type = type
+                    pemilikProdukViewModel.createProduct(token, tempProduct, foto)
                 }else{
-                    toast("not valid")
+                    showToast("not valid")
                 }
             }
         }else{
@@ -192,7 +230,6 @@ class PemilikProdukActivity : AppCompatActivity() {
                     val harga_sewa = et_hargasewa.text.toString().trim()
                     val alamat = et_alamat.text.toString().trim()
                     val _sisi = sisi
-
                     var foto : String? = null
                     getPassedProduk()?.let { p ->
                         val fotoFromViewModel = pemilikProdukViewModel.listenToCurrentProduct().value!!.foto
@@ -211,12 +248,11 @@ class PemilikProdukActivity : AppCompatActivity() {
                         tempProduct.foto = foto
                         pemilikProdukViewModel.updateproduk(token, getPassedProduk()?.id.toString(), tempProduct)
                     }else{
-                        toast("not valid")
+                        showToast("not valid")
                     }
                 }catch (e: Exception){
-                    toast(e.message.toString())
+                    showToast(e.message.toString())
                 }
-
             }
         }
     }
@@ -224,7 +260,8 @@ class PemilikProdukActivity : AppCompatActivity() {
     private fun isUpdate() {
         getPassedProduk()?.let {
             iv_product.load(it.foto)
-            val p = Produk(it.id, it.panjang, it.lebar, it.sisi, it.foto, it.masa_berdiri, it.keterangan, it.harga_sewa, it.alamat, it.status)
+            val p = Produk(it.id,null,null, it.panjang, it.lebar, it.sisi,
+                it.foto, it.masa_berdiri, it.keterangan, it.harga_sewa, it.alamat, it.status)
             pemilikProdukViewModel.setCurrentProduct(p)
         }
     }
@@ -238,6 +275,5 @@ class PemilikProdukActivity : AppCompatActivity() {
     private fun setLebarErr(err : String?) { til_lebar.error = err }
     private fun setPanjangErr(err : String?) { til_panjang.error = err }
     private fun setMasaBerdiriErr(err : String?) { til_masaberdiri.error = err }
-    private fun toast(message : String) = Toast.makeText(this@PemilikProdukActivity, message, Toast.LENGTH_LONG).show()
-
+    private fun fetchKecamatan() = pemilikProdukViewModel.fetchKecamatan()
 }

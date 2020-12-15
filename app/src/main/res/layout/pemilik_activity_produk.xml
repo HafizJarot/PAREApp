@@ -114,6 +114,30 @@
                             android:inputType="textMultiLine" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <TextView
+                        android:text="Masukkan Kecamatan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:id="@+id/linear_search"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Spinner
+                            android:popupBackground="@color/white"
+                            android:layout_marginBottom="10dp"
+                            android:id="@+id/spinner_kecamatan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:id="@+id/til_hargasewa"
@@ -129,6 +153,20 @@
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <TextView
+                        android:text="Masukkan Type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <Spinner
+                        android:id="@+id/spinner_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="Masukkan Sisi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
                     <Spinner
                         android:id="@+id/spinner_sisi"

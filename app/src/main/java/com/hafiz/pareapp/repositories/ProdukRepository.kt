@@ -150,6 +150,8 @@ class ProdukRepository(private val api: ApiService) : ProdukContract {
 
     override fun createProduct(token: String, produk: Produk, urlFoto: String, listener: SingleResponse<Produk>) {
         val map = HashMap<String, RequestBody>()
+        map["id_kecamatan"] = createPartFromString(produk.id_kecamatan.toString())
+        map["type"] = createPartFromString(produk.type!!)
         map["masa_berdiri"] = createPartFromString(produk.masa_berdiri!!)
         map["keterangan"] = createPartFromString(produk.keterangan!!)
         map["harga_sewa"] = createPartFromString(produk.harga_sewa.toString())
@@ -169,52 +171,11 @@ class ProdukRepository(private val api: ApiService) : ProdukContract {
                 when{
                     response.isSuccessful -> {
                         val b = response.body()
-                        if (b?.status!!) {
-                            listener.onSuccess(b.data)
-                        } else {
-                            listener.onFailure(Error(b.message))
-                        }
+                        if (b?.status!!) listener.onSuccess(b.data) else listener.onFailure(Error(b.message))
                     }
                     else -> listener.onFailure(Error(response.message()))
                 }
             }
-
-        })
-    }
-
-    fun tambahProduk(token: String, produk: Produk, urlFoto: String, result: (Boolean, Error?) -> Unit) {
-        val map = HashMap<String, RequestBody>()
-        map["masa_berdiri"] = createPartFromString(produk.masa_berdiri!!)
-        map["keterangan"] = createPartFromString(produk.keterangan!!)
-        map["harga_sewa"] = createPartFromString(produk.harga_sewa.toString())
-        map["panjang"] = createPartFromString(produk.panjang.toString())
-        map["lebar"] = createPartFromString(produk.lebar.toString())
-        map["alamat"] = createPartFromString(produk.alamat!!)
-        map["sisi"] = createPartFromString(produk.sisi.toString())
-        val file = File(urlFoto)
-        val requestBodyForFile = RequestBody.create(MediaType.parse("image/*"), file)
-        val image = MultipartBody.Part.createFormData("foto", file.name, requestBodyForFile)
-        api.tambahproduk(token, map, image).enqueue(object : Callback<WrappedResponse<Produk>> {
-            override fun onFailure(call: Call<WrappedResponse<Produk>>, t: Throwable) {
-                result(false, Error(t.message))
-            }
-
-            override fun onResponse(
-                call: Call<WrappedResponse<Produk>>,
-                response: Response<WrappedResponse<Produk>>
-            ) {
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    if (body?.status!!) {
-                        result(true, null)
-                    } else {
-                        result(false, Error(body.message))
-                    }
-                } else {
-                    result(false, Error(response.message()))
-                }
-            }
-
         })
     }
 

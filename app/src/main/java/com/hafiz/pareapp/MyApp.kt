@@ -45,6 +45,7 @@ val repositoryModules = module {
     factory { UserRepository(get()) }
     factory { OrderRepository(get()) }
     factory { CompanyRepository(get()) }
+    factory { KecamatanRepository(get()) }
 }
 
 val viewModelModules = module {
@@ -54,16 +55,16 @@ val viewModelModules = module {
 
     viewModel { PemilikHomeViewModel(get()) }
     viewModel { PemilikMyOrderViewModel(get()) }
-    viewModel { PemilikProdukViewModel(get()) }
+    viewModel { PemilikProdukViewModel(get(), get()) }
     viewModel { PemilikProfileViewModel(get()) }
     viewModel { TarikSaldoViewModel(get()) }
 
     viewModel { LoginViewModel(get(), get()) }
     viewModel { PenyewaOrderViewModel(get(),get()) }
 
-    viewModel { PenyewaHomeViewModel(get()) }
+    viewModel { PenyewaHomeViewModel(get(), get()) }
     viewModel { PenyewaMyOrderViewModel(get()) }
     viewModel { PenyewaProfileViewModel(get()) }
     viewModel { PenyewaProductViewModel(get()) }
-    viewModel { PenyewaDetailProdukViewModel(get()) }
+    viewModel { PenyewaDetailProdukViewModel(get(), get()) }
 }

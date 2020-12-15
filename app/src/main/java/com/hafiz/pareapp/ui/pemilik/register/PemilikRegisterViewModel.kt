@@ -1,6 +1,8 @@
 package com.hafiz.pareapp.ui.pemilik.register
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.hafiz.pareapp.models.Pemilik
 import com.hafiz.pareapp.models.RegisterPemilik
 import com.hafiz.pareapp.repositories.FirebaseRepository
 import com.hafiz.pareapp.repositories.UserRepository
@@ -13,28 +15,32 @@ class PemilikRegisterViewModel (
     private val userRepository: UserRepository,
     private val firebaseRepository: FirebaseRepository) : ViewModel(){
     private val state : SingleLiveEvent<PemilikRegisterState> = SingleLiveEvent()
+    private val pemilik = MutableLiveData<Pemilik>()
+    private val noIzin = MutableLiveData<String>()
+
+
     private fun setLoading() { state.value = PemilikRegisterState.IsLoading(true) }
     private fun hideLoading() { state.value = PemilikRegisterState.IsLoading(false) }
     private fun toast(mesagge: String) { state.value = PemilikRegisterState.ShowToast(mesagge) }
-    private fun success(email: String) { state.value = PemilikRegisterState.Success(email) }
+    private fun success() { state.value = PemilikRegisterState.Success }
     private fun reset() { state.value = PemilikRegisterState.Reset }
 
-    fun validate(noIzin: String, namaPerusahaan: String, email: String, password: String, confirmPassword: String,
-                 noHp: String, alamat : String) : Boolean {
-        reset()
-
+    fun validateNoIzin(noIzin: String) : Boolean {
         if (noIzin.isEmpty()){
             state.value = PemilikRegisterState.Validate(noIzin = "no izin tidak boleh kosong")
             return false
         }
 
-        if (namaPerusahaan.isEmpty()){
-            state.value = PemilikRegisterState.Validate(namaPerusahaan = "nama perusahaan tidak boleh kosong")
-            return false
-        }
+        return true
+    }
 
-        if (namaPerusahaan.length < 5){
-            state.value = PemilikRegisterState.Validate(namaPerusahaan = "nama perusahaan setidaknya 5 karakter")
+
+    fun validate(noIzin: String, email: String, password: String, confirmPassword: String,
+                 noHp: String) : Boolean {
+        reset()
+
+        if (noIzin.isEmpty()){
+            state.value = PemilikRegisterState.Validate(noIzin = "no izin tidak boleh kosong")
             return false
         }
 
@@ -78,16 +84,6 @@ class PemilikRegisterViewModel (
             return false
         }
 
-        if (alamat.isEmpty()){
-            state.value = PemilikRegisterState.Validate(alamat = "alamat tidak boleh kosong")
-            return false
-        }
-
-        if (alamat.length < 10){
-            state.value = PemilikRegisterState.Validate(alamat = "alamat minimal 10 karakter")
-            return false
-        }
-
         return true
     }
 
@@ -96,22 +92,21 @@ class PemilikRegisterViewModel (
         generateTokenFirebase(user)
     }
 
-    fun generateTokenFirebase(user: RegisterPemilik){
+    private fun generateTokenFirebase(user: RegisterPemilik){
         setLoading()
         firebaseRepository.generateFcmToken(object : SingleResponse<String>{
             override fun onSuccess(data: String?) {
                 data?.let { token ->
-                    userRepository.registerPemilik(user, token){resultUser, error ->
-                        error?.let {
-                            hideLoading()
-                            it.message?.let { message->
-                            toast(message) }
+                    userRepository.registerPemilik(user, token, object : SingleResponse<RegisterPemilik>{
+                        override fun onSuccess(data: RegisterPemilik?) {
+                            data?.let { success() }
                         }
-                        resultUser?.let {
-                            hideLoading()
-                            success(it.email!!)
+
+                        override fun onFailure(err: Error) {
+                            toast(err.message.toString())
                         }
-                    }
+                    })
+
                 } ?: run{
                     toast("Cannot get fcm token")
                     hideLoading()
@@ -125,13 +120,35 @@ class PemilikRegisterViewModel (
 
     }
 
+    fun checkNoIzin(noIzin: String){
+        setLoading()
+        userRepository.checkNoIzin(noIzin, object : SingleResponse<Pemilik>{
+            override fun onSuccess(data: Pemilik?) {
+                hideLoading()
+                data?.let { pemilik.postValue(it) }
+            }
+
+            override fun onFailure(err: Error) {
+                hideLoading()
+                toast("no izin tidak di temukan")
+            }
+
+        })
+    }
+
+    fun setNoIzin(no: String) {
+        noIzin.postValue(no)
+    }
+
+    fun getNoIzin() = noIzin
     fun listenToState() = state
+    fun listenToPemilik() = pemilik
 }
 
 sealed class PemilikRegisterState{
     data class IsLoading(var state : Boolean = false) : PemilikRegisterState()
     data class ShowToast(var mesagge : String) : PemilikRegisterState()
-    data class Success(var email: String) : PemilikRegisterState()
+    object Success : PemilikRegisterState()
     object Reset : PemilikRegisterState()
     data class Validate(
         var noIzin : String? = null,

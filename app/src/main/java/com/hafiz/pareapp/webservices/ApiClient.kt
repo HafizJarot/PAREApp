@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 
 class ApiClient {
     companion object {
-        const val ENDPOINT = "https://papanreklame.herokuapp.com/"
+        const val ENDPOINT = "http://pare.tugas-akhir.com/"
         private var retrofit: Retrofit? = null
         private var opt = OkHttpClient.Builder().apply {
             connectTimeout(30, TimeUnit.SECONDS)
@@ -41,14 +41,19 @@ class ApiClient {
 
 interface ApiService {
 
+    @GET("api/pemilik/izin/{no_izin}")
+    fun fetchPemilik(
+        @Path("no_izin") noIzin : String
+    ) : Call<WrappedResponse<Pemilik>>
+
     @Headers("Content-Type: application/json")
-    @POST("api/user/register/pemilik")
+    @POST("api/pemilik/register")
     fun regiserPemilik(
         @Body body: RequestBody
     ) : Call<WrappedResponse<RegisterPemilik>>
 
     @FormUrlEncoded
-    @POST("api/user/register/penyewa")
+    @POST("api/penyewa/register")
     fun registerPenyewa(
         @Field("nama") nama : String,
         @Field("email") email : String,
@@ -78,18 +83,29 @@ interface ApiService {
         @Field("nomor_rekening") nomor_rekening : String
     ) : Call<WrappedResponse<User>>
 
-    @GET("api/pemilik")
+
+    @GET("api/kecamatan")
+    fun kecamatan() : Call<WrappedListResponse<Kecamatan>>
+
+    @GET("api/penyewa/pemilik/{id_kecamatan}")
+    fun searchPemilik(
+        @Header("Authorization") token: String,
+        @Path("id_kecamatan") id_kecamatan : Int
+    ) : Call<WrappedListResponse<Pemilik>>
+
+
+    @GET("api/penyewa/pemilik/all")
     fun fetchCompanies(
         @Header("Authorization") token: String
     ) : Call<WrappedListResponse<Pemilik>>
 
     @GET("api/produk/{id_pemilik}")
     fun fetchProductByCompany(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token : String,
         @Path("id_pemilik") id_pemilik : Int
     ): Call<WrappedListResponse<Produk>>
 
-    @GET("api/produk")
+    @GET("api/pemilik/produk")
     fun fetchProductPemilik(@Header("Authorization") token: String): Call<WrappedListResponse<Produk>>
 
     @FormUrlEncoded
@@ -113,23 +129,14 @@ interface ApiService {
 
 
     @Multipart
-    @POST("api/produk/store")
+    @POST("api/pemilik/produk/store")
     fun tambahproduk(
         @Header("Authorization") token: String,
         @PartMap partMap: HashMap<String, RequestBody>,
         @Part image: MultipartBody.Part
     ): Call<WrappedResponse<Produk>>
 
-//    @Multipart
-//    @POST("api/produk/{id}/update")
-//    fun updateproduk(
-//        @Header("Authorization") token: String,
-//        @Path("id") id: Int? = null,
-//        @PartMap partMap: HashMap<String, RequestBody>,
-//        @Part image: MultipartBody.Part
-//    ): Call<WrappedResponse<Produk>>
-
-    @POST("api/produk/{id}/update")
+    @POST("api/pemilik/produk/{id}/update")
     fun updateProduk(
         @Header("Authorization") token: String,
         @Path("id") id: Int? = null,
@@ -137,7 +144,7 @@ interface ApiService {
     ) : Call<WrappedResponse<Produk>>
 
     @Multipart
-    @POST("api/produk/{id}/update/photo")
+    @POST("api/pemilik/produk/{id}/update/photo")
     fun updateProdukPhoto(
         @Header("Authorization") token : String,
         @Path("id") id : String,
@@ -145,23 +152,11 @@ interface ApiService {
     ) :Call<WrappedResponse<Produk>>
 
 
-    @GET("api/produk/{id}/delete")
+    @GET("api/pemilik/produk/{id}/delete")
     fun deleteProduk(
         @Header("Authorization") token : String,
         @Path("id") id : Int
     ) :Call<WrappedResponse<Produk>>
-
-//    @FormUrlEncoded
-//    @POST("api/order/store")
-//    fun orderStore(
-//        @Header("Authorization") token: String,
-//        @Field("id_pemilik") id_pemilik: Int,
-//        @Field("id_produk") id_produk: Int,
-//        @Field("harga") harga: Int,
-//        @Field("tanggal_mulai_sewa") tanggal_mulai_sewa: String,
-//        @Field("selesai_sewa") selesai_sewa: String,
-//        @Field("sisi") sisi: String
-//    ): Call<WrappedResponse<Order>>
 
     @Headers("Content-Type: application/json")
     @POST("api/order/store")

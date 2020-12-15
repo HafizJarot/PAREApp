@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.hafiz.pareapp.R
 import com.hafiz.pareapp.ui.pemilik.produk.PemilikProdukActivity
 import com.hafiz.pareapp.adapters.pemilik.PemilikProdukAdapter
+import com.hafiz.pareapp.models.Produk
 import com.hafiz.pareapp.utils.extensions.gone
 import com.hafiz.pareapp.utils.extensions.visible
 import com.hafiz.pareapp.utils.PareUtils
-import kotlinx.android.synthetic.main.pemilik_fragment_home.*
+import kotlinx.android.synthetic.main.pemilik_fragment_home.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PemilikHomeFragment :Fragment(R.layout.pemilik_fragment_home){
@@ -21,31 +22,47 @@ class PemilikHomeFragment :Fragment(R.layout.pemilik_fragment_home){
     private val pemilikHomeViewModel : PemilikHomeViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        rv_home.apply {
-            adapter = PemilikProdukAdapter(mutableListOf(), activity!!, pemilikHomeViewModel)
-            layoutManager = GridLayoutManager(requireActivity(),2)
-        }
+        setUpRecyclerView()
+        goToAddProduct()
+        observe()
+    }
 
-        pemilikHomeViewModel.listenToState().observer(viewLifecycleOwner, Observer { handleui(it) })
-        pemilikHomeViewModel.listenToProduks().observe(viewLifecycleOwner, Observer {
-            rv_home.adapter?.let {adapter ->
+    private fun observe(){
+        observeState()
+        observeProducts()
+    }
+
+    private fun observeProducts() = pemilikHomeViewModel.listenToProduks().observe(viewLifecycleOwner, Observer { handleProducts(it) })
+
+    private fun handleProducts(list: List<Produk>?) {
+        list?.let {
+            requireView().rv_home.adapter?.let {adapter ->
                 if (adapter is PemilikProdukAdapter){
                     adapter.changelist(it)
                 }
             }
-        })
-        fab_create.setOnClickListener { startActivity(Intent(activity, PemilikProdukActivity::class.java)) }
+        }
+    }
+
+    private fun observeState() = pemilikHomeViewModel.listenToState().observer(viewLifecycleOwner, Observer { handleui(it) })
+
+
+    private fun goToAddProduct() = requireView().fab_create.setOnClickListener { startActivity(Intent(activity, PemilikProdukActivity::class.java)) }
+
+    private fun setUpRecyclerView(){
+        requireView().rv_home.apply {
+            adapter = PemilikProdukAdapter(mutableListOf(), activity!!, pemilikHomeViewModel)
+            layoutManager = GridLayoutManager(requireActivity(),2)
+        }
     }
 
     private fun handleui(it : PemilikHomeState){
         when(it){
             is PemilikHomeState.IsLoading -> {
                 if (it.state){
-                    pb_home.isIndeterminate = true
-                    pb_home.visible()
+                    requireView().pb_home.visible()
                 }else{
-                    pb_home.isIndeterminate = false
-                    pb_home.gone()
+                    requireView().pb_home.gone()
                 }
             }
             is PemilikHomeState.ShowToast -> toast(it.message)
@@ -56,10 +73,13 @@ class PemilikHomeFragment :Fragment(R.layout.pemilik_fragment_home){
         }
     }
 
+    private fun fetchProducts() = pemilikHomeViewModel.getMyProduks("Bearer ${PareUtils.getToken(requireActivity())}")
+
     override fun onResume() {
         super.onResume()
+        fetchProducts()
         //pemilikHomeViewModel.getMyProduks("Bearer ${PareUtils.getToken(activity!!)}")
     }
 
-    private fun toast(message : String) = Toast.makeText(activity!!, message, Toast.LENGTH_LONG).show()
+    private fun toast(message : String) = Toast.makeText(requireActivity(), message, Toast.LENGTH_LONG).show()
 }

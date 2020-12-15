@@ -10,6 +10,7 @@ import com.hafiz.pareapp.R
 import com.hafiz.pareapp.ui.penyewa.main.PenyewaMainActivity
 import com.hafiz.pareapp.models.Produk
 import com.hafiz.pareapp.models.User
+import com.hafiz.pareapp.ui.penyewa.detail_product.PaymentMidtrans
 import com.hafiz.pareapp.utils.PareUtils
 import com.hafiz.pareapp.utils.extensions.showToast
 import kotlinx.android.synthetic.main.penyewa_activity_order.*

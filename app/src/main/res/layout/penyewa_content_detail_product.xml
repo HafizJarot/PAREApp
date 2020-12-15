@@ -198,6 +198,12 @@
                 android:text="Total Harga"
                 android:textSize="18sp" />
 
+            <com.google.android.material.button.MaterialButton
+                android:enabled="false"
+                android:text="order"
+                android:id="@+id/btn_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
 

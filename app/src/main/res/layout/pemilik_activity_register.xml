@@ -4,7 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="10dp"
     android:layout_width="match_parent"
     android:background="@drawable/grad_bg"
     android:layout_height="match_parent">
@@ -23,12 +22,12 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_margin="10dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:layout_marginStart="10sp"
                     android:textSize="30sp"
                     android:textColor="@color/colorButton"
                     android:textStyle="bold"
@@ -44,120 +43,151 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_no_izin"
-                    app:errorEnabled="true"
-                    android:hint="Nomor izin"
-                    app:boxBackgroundColor="@android:color/transparent"
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_no_izin"
-                        android:layout_width="match_parent"
-                        android:inputType="text"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_nama_perusahaan"
-                    app:errorEnabled="true"
-                    android:hint="Nama perusahaan"
-                    app:boxBackgroundColor="@android:color/transparent"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_marginBottom="10dp"
+                        android:id="@+id/til_no_izin"
+                        app:errorEnabled="true"
+                        android:hint="Nomor izin"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_no_izin"
+                            android:layout_width="match_parent"
+                            android:inputType="text"
+                            android:layout_height="wrap_content"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:text="cek no izin"
+                        android:id="@+id/btn_check"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/linear_detail"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18sp"
+                            android:text="aaaa"
+                            android:id="@+id/txt_no_izin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18sp"
+                            android:text="aaaa"
+                            android:id="@+id/txt_nama_perusahaan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18sp"
+                            android:text="aaaa"
+                            android:id="@+id/txt_alamat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/linear_akun"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_email"
+                        app:errorEnabled="true"
+                        android:hint="Email"
+                        app:boxBackgroundColor="@android:color/transparent"
                         android:layout_width="match_parent"
-                        android:id="@+id/et_nama_perusahaan"
-                        android:inputType="text"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_email"
-                    app:errorEnabled="true"
-                    android:hint="Email"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_email"
+                            android:layout_width="match_parent"
+                            android:inputType="textEmailAddress"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_email"
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_password"
+                        app:errorEnabled="true"
+                        android:hint="Password"
+                        app:boxBackgroundColor="@android:color/transparent"
                         android:layout_width="match_parent"
-                        android:inputType="textEmailAddress"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        app:passwordToggleEnabled="true"
+                        android:layout_height="wrap_content">
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_password"
+                            android:layout_width="match_parent"
+                            android:inputType="textPassword"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_password"
-                    app:errorEnabled="true"
-                    android:hint="Password"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    android:layout_width="match_parent"
-                    app:passwordToggleEnabled="true"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_password"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_confirm_password"
+                        app:errorEnabled="true"
+                        android:hint="Konfirmasi password"
+                        app:boxBackgroundColor="@android:color/transparent"
                         android:layout_width="match_parent"
-                        android:inputType="textPassword"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        app:passwordToggleEnabled="true"
+                        android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_confirm_password"
-                    app:errorEnabled="true"
-                    android:hint="Konfirmasi password"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    android:layout_width="match_parent"
-                    app:passwordToggleEnabled="true"
-                    android:layout_height="wrap_content">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_confirm_password"
+                            android:layout_width="match_parent"
+                            android:inputType="textPassword"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_confirm_password"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_no_hp"
+                        app:errorEnabled="true"
+                        android:hint="Nomor ponsel"
+                        app:boxBackgroundColor="@android:color/transparent"
                         android:layout_width="match_parent"
-                        android:inputType="textPassword"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_no_hp"
-                    app:errorEnabled="true"
-                    android:hint="Nomor ponsel"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_no_hp"
+                            android:layout_width="match_parent"
+                            android:inputType="phone"
+                            android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_no_hp"
+                    <com.google.android.material.button.MaterialButton
                         android:layout_width="match_parent"
-                        android:inputType="phone"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:id="@+id/btn_register"
+                        android:text="BUAT AKUN"
+                        android:textAllCaps="false"
+                        android:layout_height="56dp"/>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_alamat"
-                    app:errorEnabled="true"
-                    android:hint="Alamat"
-                    app:boxBackgroundColor="@android:color/transparent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_alamat"
-                        android:layout_width="match_parent"
-                        android:inputType="textEmailAddress"
-                        android:layout_height="wrap_content"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="match_parent"
-                    android:id="@+id/btn_register"
-                    android:text="BUAT AKUN"
-                    android:textAllCaps="false"
-                    android:layout_height="56dp"/>
+                </LinearLayout>
 
             </LinearLayout>
 

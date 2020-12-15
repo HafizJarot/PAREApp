@@ -1,14 +1,11 @@
 package com.hafiz.pareapp.repositories
 
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.annotations.SerializedName
+import com.hafiz.pareapp.models.Pemilik
 import com.hafiz.pareapp.models.RegisterPemilik
 import com.hafiz.pareapp.models.RegisterPenyewa
 import com.hafiz.pareapp.models.User
-import com.hafiz.pareapp.utils.PareUtils
 import com.hafiz.pareapp.utils.SingleResponse
-import com.hafiz.pareapp.webservices.ApiClient
 import com.hafiz.pareapp.webservices.ApiService
 import com.hafiz.pareapp.webservices.WrappedResponse
 import okhttp3.MediaType
@@ -25,15 +22,39 @@ interface UserContract {
     fun updateProfil(token: String, name : String, password: String, listener: SingleResponse<User>)
     fun updatePhotoProfil(token: String, imgUrl : String, listener: SingleResponse<User>)
     fun ambilUang(token: String, saldo : String, namaBank : String, namaRekening : String, nomorRekening : String, listener: SingleResponse<User>)
+    fun checkNoIzin(noIzin : String, listener : SingleResponse<Pemilik>)
+    fun registerPemilik(user : RegisterPemilik, fcmToken : String, listener: SingleResponse<RegisterPemilik>)
 }
 
 class UserRepository (private val api : ApiService) : UserContract {
+
+    override fun checkNoIzin(noIzin: String, listener: SingleResponse<Pemilik>) {
+        api.fetchPemilik(noIzin).enqueue(object : Callback<WrappedResponse<Pemilik>>{
+            override fun onFailure(call: Call<WrappedResponse<Pemilik>>, t: Throwable) {
+                listener.onFailure(Error(t.message))
+            }
+
+            override fun onResponse(
+                call: Call<WrappedResponse<Pemilik>>,
+                response: Response<WrappedResponse<Pemilik>>
+            ) {
+                when{
+                    response.isSuccessful -> {
+                        val b = response.body()
+                        if (b?.status!!) listener.onSuccess(b.data) else listener.onFailure(Error(b.message))
+                    }
+                    else ->listener.onFailure(Error(response.message()))
+                }
+            }
+
+        })
+    }
+
     override fun ambilUang(token: String, saldo: String, namaBank : String,
                            namaRekening : String, nomorRekening : String, listener: SingleResponse<User>) {
         api.ambilUang(token, saldo, namaBank, namaRekening, nomorRekening).enqueue(object : Callback<WrappedResponse<User>>{
             override fun onFailure(call: Call<WrappedResponse<User>>, t: Throwable) {
                 listener.onFailure(Error(t.message))
-                println("failre ${t.message}")
             }
 
             override fun onResponse(call: Call<WrappedResponse<User>>, response: Response<WrappedResponse<User>>) {
@@ -46,9 +67,7 @@ class UserRepository (private val api : ApiService) : UserContract {
                             listener.onFailure(Error(body.message))
                         }
                     }
-                    !response.isSuccessful -> {
-                        listener.onFailure(Error(response.message()))
-                    }
+                    !response.isSuccessful -> listener.onFailure(Error(response.message()))
                 }
             }
 
@@ -141,29 +160,30 @@ class UserRepository (private val api : ApiService) : UserContract {
         })
     }
 
-    fun registerPemilik(user : RegisterPemilik, fcmToken : String, result: (RegisterPemilik?, Error?) -> Unit){
+    override fun registerPemilik(user: RegisterPemilik, fcmToken: String, listener: SingleResponse<RegisterPemilik>) {
         val g = GsonBuilder().create()
         user.fcm_token = fcmToken
         val json = g.toJson(user)
+        println(json)
         val body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
         api.regiserPemilik(body).enqueue(object : Callback<WrappedResponse<RegisterPemilik>>{
             override fun onFailure(call: Call<WrappedResponse<RegisterPemilik>>, t: Throwable) {
-                result(null, Error(t.message))
+                listener.onFailure(Error(t.message))
             }
 
-            override fun onResponse(call: Call<WrappedResponse<RegisterPemilik>>, response: Response<WrappedResponse<RegisterPemilik>>) {
-                if (response.isSuccessful){
-                    val b = response.body()
-                    if (b?.status!!){
-                        val data = b.data
-                        result(data, null)
-                    }else{
-                        result(null, Error("maaf, gagal register"))
+            override fun onResponse(
+                call: Call<WrappedResponse<RegisterPemilik>>,
+                response: Response<WrappedResponse<RegisterPemilik>>
+            ) {
+                when{
+                    response.isSuccessful -> {
+                        val b = response.body()
+                        if (b?.status!!) listener.onSuccess(b.data) else listener.onFailure(Error(b.message))
                     }
-                }else{
-                    result(null, Error("gagal register"))
+                    else -> listener.onFailure(Error(response.message()))
                 }
             }
+
         })
     }
 
