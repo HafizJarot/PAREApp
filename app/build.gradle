@@ -93,6 +93,8 @@ dependencies {
     implementation 'com.google.vr:sdk-videowidget:1.10.0'
 
     implementation 'com.github.VenkatramanRajagopalan:DateRangePicker:2.1'
+    implementation 'com.github.dhaval2404:imagepicker-support:1.7.1'
+
     //implementation 'com.archit.calendar:awesome-calendar:2.0.0'
 
 }

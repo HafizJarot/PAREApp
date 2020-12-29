@@ -20,7 +20,7 @@
         <activity
             android:name=".ui.penyewa.detail_product.PenyewaDetailProductActivity"
             android:label="@string/title_activity_penyewa_detail_product"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.pemilik.tarik_saldo.TarikSaldoActivity" />
         <activity android:name=".ui.penyewa.panoramic_view.PanoramicView" />
         <activity android:name=".SplashScreenActivity">

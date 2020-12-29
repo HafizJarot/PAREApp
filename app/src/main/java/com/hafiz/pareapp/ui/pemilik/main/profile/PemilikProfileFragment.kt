@@ -12,10 +12,7 @@ import com.hafiz.pareapp.ui.login.LoginActivity
 import com.hafiz.pareapp.ui.pemilik.tarik_saldo.TarikSaldoActivity
 import com.hafiz.pareapp.models.User
 import com.hafiz.pareapp.utils.PareUtils
-import kotlinx.android.synthetic.main.pemilik_fragment_profile.*
-import kotlinx.android.synthetic.main.penyewa_fragment_profile.btn_logout
-import kotlinx.android.synthetic.main.penyewa_fragment_profile.tv_email
-import kotlinx.android.synthetic.main.penyewa_fragment_profile.tv_nama
+import kotlinx.android.synthetic.main.pemilik_fragment_profile.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PemilikProfileFragment : Fragment(R.layout.pemilik_fragment_profile){
@@ -25,7 +22,7 @@ class PemilikProfileFragment : Fragment(R.layout.pemilik_fragment_profile){
         super.onViewCreated(view, savedInstanceState)
         logout()
         pemilikProfileViewModel.listenToCurrentUser().observe(requireActivity(), Observer { handleUser(it) })
-        txt_tarik_saldo.setOnClickListener { startActivity(Intent(requireActivity(), TarikSaldoActivity::class.java)) }
+        requireView().txt_tarik_saldo.setOnClickListener { startActivity(Intent(requireActivity(), TarikSaldoActivity::class.java)) }
         pemilikProfileViewModel.listenToState().observer(requireActivity(), Observer { handleUiState(it) })
 //        ambilUang()
     }
@@ -64,13 +61,13 @@ class PemilikProfileFragment : Fragment(R.layout.pemilik_fragment_profile){
 
     @SuppressLint("SetTextI18n")
     private fun handleUser(it: User) {
-        tv_nama.text = it.pemilik?.nama_perusahaan
-        tv_email.text = it.email
-        //txt_saldo.text = "Saldo \n ${PareUtils.setToIDR(it.saldo!!)}"
+        requireView().tv_nama.text = it.pemilik?.nama_perusahaan
+        requireView().tv_email.text = it.email
+        requireView().txt_saldo.text = "Saldo \n ${PareUtils.setToIDR(it.pemilik?.saldo!!)}"
     }
 
-    private fun logout(){
-        btn_logout.setOnClickListener {
+    private fun logout() {
+        requireView().btn_logout.setOnClickListener {
             PareUtils.clearToken(activity!!)
             startActivity(Intent(activity!!, LoginActivity::class.java))
             activity!!.finish()

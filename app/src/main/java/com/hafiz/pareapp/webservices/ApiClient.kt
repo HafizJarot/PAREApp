@@ -74,9 +74,9 @@ interface ApiService {
 
 
     @FormUrlEncoded
-    @POST("api/user/ambil/uang")
+    @POST("api/pemilik/ambil/uang")
     fun ambilUang(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token : String,
         @Field("saldo") saldo : String,
         @Field("nama_bank") nama_bank : String,
         @Field("nama_rekening") nama_rekening : String,

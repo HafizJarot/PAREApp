@@ -9,5 +9,6 @@ data class Pemilik(
     @SerializedName("id") var id : Int? = null,
     @SerializedName("no_izin") var no_izin: String? = null,
     @SerializedName("nama_perusahaan") var nama_perusahaan : String? = null,
-    @SerializedName("alamat") var alamat : String? = null
+    @SerializedName("alamat") var alamat : String? = null,
+    @SerializedName("saldo") var saldo : Int? = 0
 ) : Parcelable

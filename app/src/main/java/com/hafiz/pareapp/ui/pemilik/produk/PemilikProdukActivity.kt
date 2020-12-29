@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import coil.api.load
 import com.fxn.pix.Pix
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.hafiz.pareapp.R
 import com.hafiz.pareapp.models.Kecamatan
 import com.hafiz.pareapp.models.Produk
@@ -178,9 +179,18 @@ class PemilikProdukActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == IMAGE_REQ_CODE && resultCode == Activity.RESULT_OK && data != null){
-            val selectedImageUri = data.getStringArrayListExtra(Pix.IMAGE_RESULTS)
-            selectedImageUri?.let { onPhotoReturned(it[0]) }
+//        if(requestCode == IMAGE_REQ_CODE && resultCode == Activity.RESULT_OK && data != null){
+//            val selectedImageUri = data.getStringArrayListExtra(Pix.IMAGE_RESULTS)
+//            selectedImageUri?.let { onPhotoReturned(it[0]) }
+//        }
+        if (resultCode == Activity.RESULT_OK) {
+            val selectedImageUri = ImagePicker.getFilePath(data)!!
+            onPhotoReturned(selectedImageUri)
+            iv_product.load(File(selectedImageUri))
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            showToast(ImagePicker.getError(data))
+        } else {
+            showToast("task cancelled")
         }
     }
 
@@ -268,7 +278,12 @@ class PemilikProdukActivity : AppCompatActivity() {
 
     private fun isInsert() = intent.getBooleanExtra("IS_INSERT", true)
     private fun getPassedProduk() : Produk? = intent.getParcelableExtra("PRODUK")
-    private fun chooseImage(){ btn_add_image.setOnClickListener { Pix.start(this, IMAGE_REQ_CODE) } }
+    private fun chooseImage(){
+        //btn_add_image.setOnClickListener { Pix.start(this, IMAGE_REQ_CODE) }
+        btn_add_image.setOnClickListener {
+            ImagePicker.with(this).compress(1024).start()
+        }
+    }
     private fun setAlamatErr(err : String?) { til_alamat.error = err }
     private fun setHargaSewaErr(err : String?) { til_hargasewa.error = err }
     private fun setKeteranganErr(err : String?) { til_keterangan.error = err }
